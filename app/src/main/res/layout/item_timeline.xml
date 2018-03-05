@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="2dp"
+    android:orientation="horizontal">
+
+    <com.github.vipulasri.timelineview.TimelineView
+        android:id="@+id/time_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:line="@color/colorPrimary"
+        app:lineSize="3dp"
+        app:markerSize="10dp" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        app:cardElevation="1dp"
+        app:contentPadding="2dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_cover"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/ic_person_black_24dp"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="1dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="4dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+
+                    android:id="@+id/text_timeline_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:textSize="12sp"
+                    tools:text="24 JAN" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_album_title"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/primaryText"
+                    android:textStyle="bold"
+
+                    tools:text="My Album Title" />
+                <android.support.v7.widget.AppCompatTextView
+
+                    android:id="@+id/text_album_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:textColor="@color/secondaryText"
+                    android:textStyle="bold"
+
+                    tools:text="Description" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_no_of_photos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+
+                    android:textColor="@color/secondaryText"
+                    tools:text="12 Photos  " />
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

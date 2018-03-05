@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#795548 </color>
+    <color name="colorPrimaryDark">#5D4037</color>
+    <color name="colorAccent">#9E9E9E </color>
+    <color name="colorA">#65D7A0</color>
+    <color name="colorB">#C6DCF7 </color>
+
+
+    <!--<color name="colorPrimary">#28C678 </color>-->
+    <!--<color name="colorPrimaryDark">#1C286C</color>-->
+    <!--<color name="colorAccent">#424B90 </color>-->
+    <!--<color name="colorA">#65D7A0</color>-->
+    <!--<color name="colorB">#C6DCF7 </color>-->
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white_greyish">#EEEEEE</color>
+
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#757575</color>
+    <color name="divider">#BDBDBD</color>
+
+
+
+
+    <color name="drawertext">#000000</color>
+
+
+    <color name="transparent">#00000000</color>
+
+
+    <color name="material_orange_500">#f8971c</color>
+</resources>

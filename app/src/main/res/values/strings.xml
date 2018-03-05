@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AsseTrack</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_asset">AsseTrack</string>
+    <string name="title_activity_login">AsseTrack</string>
+    <string name="title_activity_create_asset">Create New Asset</string>
+    <string name="title_activity_asset_list">AsseTrack</string>
+</resources>

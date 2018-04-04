@@ -40,6 +40,7 @@ public class AssetActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipe_refresh_layout;
     private FragmentAssetDetails fragmentDetails;
     private FragmentAssetIssues fragmentIssues;
+    private FragmentChartView fragmentChartView;
     ViewPagerAdapter adapter;String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public class AssetActivity extends AppCompatActivity {
 
         fragmentDetails = new FragmentAssetDetails();
         fragmentIssues = new FragmentAssetIssues();
+        fragmentChartView=new FragmentChartView();
 
         Bundle args=new Bundle();
         args.putString("key_id",id);
@@ -89,6 +91,7 @@ public class AssetActivity extends AppCompatActivity {
 
         adapter.addFragment(fragmentDetails, "lo");
         adapter.addFragment(fragmentIssues, "li");
+        adapter.addFragment(fragmentChartView,"");
 
 
 
@@ -111,6 +114,7 @@ public class AssetActivity extends AppCompatActivity {
 
         tabLayout.getTabAt(0).setText("Asset Details");
         tabLayout.getTabAt(1).setText("Asset History");
+        tabLayout.getTabAt(2).setText("Chart");
 
 
 

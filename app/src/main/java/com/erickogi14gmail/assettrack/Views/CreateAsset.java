@@ -57,86 +57,83 @@ public class CreateAsset extends AppCompatActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(imagepath!=null&&tag_s!=null) {
-                    if (edtCondition.getText().toString().isEmpty()) {
-                        edtCondition.setError("Required");
-                        return;
-                    }
-                    if (edtName.getText().toString().isEmpty()) {
-                        edtName.setError("Required");
-                        return;
-                    }
-                    if (edtSite.getText().toString().isEmpty()) {
-                        edtSite.setError("Required");
-                        return;
-                    }
-                    if (edtSerial.getText().toString().isEmpty()) {
-                        edtSerial.setError("Required");
-                        return;
-                    }
-                    if (edtInstalationdate.getText().toString().isEmpty()) {
-                        edtInstalationdate.setError("Required");
-                        return;
-                    }
-                    if (edtCondition.getText().toString().isEmpty()) {
-                        edtCondition.setError("Required");
-                        return;
-                    }
-
-                    if (edtModel.getText().toString().isEmpty()) {
-                        edtModel.setError("Required");
-                        return;
-                    }
-                    if (edtService.getText().toString().isEmpty()) {
-                        edtService.setError("Required");
-                        return;
-                    }
-
-
-                    Assets assets = new Assets();
-                    assets.setLast_maintenance(edtInstalationdate.getText().toString());
-                    assets.setCondition(edtCondition.getText().toString());
-                    assets.setDate(DateTimeUtils.getToday());
-                    assets.setLast_maintenance_by("Eric Kogi");
-                    assets.setSerial(edtSerial.getText().toString());
-                    assets.setTag(tag_s);
-                    assets.setType(edtName.getText().toString());
-                    assets.setImage(imagepath);
-                    assets.setModel(edtModel.getText().toString());
-                    assets.setContract(edtService.getText().toString());
-                    assets.setInstalledby("Eric Kogi");
-
-                    ContentValues cv=new ContentValues();
-                    cv.put(DbConstants.type,assets.getType());
-                    cv.put(DbConstants.tag,assets.getTag());
-                    cv.put(DbConstants.installatiodate,assets.getDate());
-                    cv.put(DbConstants.last_maintenance,assets.getLast_maintenance());
-                    cv.put(DbConstants.last_maintenance_by,assets.getLast_maintenance_by());
-                    cv.put(DbConstants.serial,assets.getSerial());
-                    cv.put(DbConstants.site,assets.getSite());
-                    cv.put(DbConstants.image,assets.getImage());
-                    cv.put(DbConstants.condition,assets.getCondition());
-                    cv.put(DbConstants.installedby,assets.getInstalledby());
-                    cv.put(DbConstants.model,assets.getModel());
-                    cv.put(DbConstants.contract,assets.getContract());
-
-
-
-                    DbOperations dbOperations=new DbOperations(CreateAsset.this);
-                    if(!dbOperations.insert(DbConstants.TABLE_ITEMS,cv)){
-                        MyToast.toast("Error Inserting",CreateAsset.this,R.drawable.ic_error_outline_black_24dp, Constants.TOAST_LONG);
-
-                    }else {
-                        finish();
-                    }
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            if(imagepath!=null&&tag_s!=null) {
+                if (edtCondition.getText().toString().isEmpty()) {
+                    edtCondition.setError("Required");
+                    return;
                 }
-                else {
-                    MyToast.toast("Make Sure to have an image and barcode for the asset",CreateAsset.this,R.drawable.ic_error_outline_black_24dp, Constants.TOAST_LONG);
+                if (edtName.getText().toString().isEmpty()) {
+                    edtName.setError("Required");
+                    return;
                 }
+                if (edtSite.getText().toString().isEmpty()) {
+                    edtSite.setError("Required");
+                    return;
+                }
+                if (edtSerial.getText().toString().isEmpty()) {
+                    edtSerial.setError("Required");
+                    return;
+                }
+                if (edtInstalationdate.getText().toString().isEmpty()) {
+                    edtInstalationdate.setError("Required");
+                    return;
+                }
+                if (edtCondition.getText().toString().isEmpty()) {
+                    edtCondition.setError("Required");
+                    return;
+                }
+
+                if (edtModel.getText().toString().isEmpty()) {
+                    edtModel.setError("Required");
+                    return;
+                }
+                if (edtService.getText().toString().isEmpty()) {
+                    edtService.setError("Required");
+                    return;
+                }
+
+
+                Assets assets = new Assets();
+                assets.setLast_maintenance(edtInstalationdate.getText().toString());
+                assets.setCondition(edtCondition.getText().toString());
+                assets.setDate(DateTimeUtils.getToday());
+                assets.setLast_maintenance_by("Eric Kogi");
+                assets.setSerial(edtSerial.getText().toString());
+                assets.setTag(tag_s);
+                assets.setType(edtName.getText().toString());
+                assets.setImage(imagepath);
+                assets.setModel(edtModel.getText().toString());
+                assets.setContract(edtService.getText().toString());
+                assets.setInstalledby("Eric Kogi");
+
+                ContentValues cv=new ContentValues();
+                cv.put(DbConstants.type,assets.getType());
+                cv.put(DbConstants.tag,assets.getTag());
+                cv.put(DbConstants.installatiodate,assets.getDate());
+                cv.put(DbConstants.last_maintenance,assets.getLast_maintenance());
+                cv.put(DbConstants.last_maintenance_by,assets.getLast_maintenance_by());
+                cv.put(DbConstants.serial,assets.getSerial());
+                cv.put(DbConstants.site,assets.getSite());
+                cv.put(DbConstants.image,assets.getImage());
+                cv.put(DbConstants.condition,assets.getCondition());
+                cv.put(DbConstants.installedby,assets.getInstalledby());
+                cv.put(DbConstants.model,assets.getModel());
+                cv.put(DbConstants.contract,assets.getContract());
+
+
+
+                DbOperations dbOperations=new DbOperations(CreateAsset.this);
+                if(!dbOperations.insert(DbConstants.TABLE_ITEMS,cv)){
+                    MyToast.toast("Error Inserting",CreateAsset.this,R.drawable.ic_error_outline_black_24dp, Constants.TOAST_LONG);
+
+                }else {
+                    finish();
+                }
+            }
+            else {
+                MyToast.toast("Make Sure to have an image and barcode for the asset",CreateAsset.this,R.drawable.ic_error_outline_black_24dp, Constants.TOAST_LONG);
             }
         });
     }
@@ -152,20 +149,17 @@ public class CreateAsset extends AppCompatActivity {
                 .withBarcodeFormats(Barcode.AZTEC | Barcode.EAN_13 | Barcode.CODE_93)
                 // .withBackfacingCamera()
                 // .withText("Scanning...")
-                .withResultListener(new MaterialBarcodeScanner.OnResultListener() {
-                    @Override
-                    public void onResult(Barcode barcode) {
+                .withResultListener(barcode -> {
 
-                        tag_s=barcode.rawValue;
-                        imgbar.setVisibility(View.GONE);
-                        txtBar.setVisibility(View.VISIBLE);
-                        txtBar.setText(barcode.rawValue);
+                    tag_s=barcode.rawValue;
+                    imgbar.setVisibility(View.GONE);
+                    txtBar.setVisibility(View.VISIBLE);
+                    txtBar.setText(barcode.rawValue);
 
 
 
 
-                        // Toast.makeText(MainActivity.this, String.valueOf(barcode.rawValue), Toast.LENGTH_SHORT).show();
-                    }
+                    // Toast.makeText(MainActivity.this, String.valueOf(barcode.rawValue), Toast.LENGTH_SHORT).show();
                 })
                 .build();
         materialBarcodeScanner.startScan();

@@ -61,6 +61,8 @@ public class AssetList extends AppCompatActivity {
                 @Override
                 public void onClickListener(int position) {
 
+
+
                 }
 
                 @Override

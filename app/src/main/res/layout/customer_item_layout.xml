@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="4dp"
+    android:id="@+id/customer_layout"
+    android:background="@drawable/bg_alertview"
     android:orientation="vertical"
     android:padding="12dp">
 
     <TextView
         android:id="@+id/txt_customer_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Customers Name"
         android:textColor="@color/black"
@@ -17,9 +19,15 @@
 
     <TextView
         android:id="@+id/txt_customer_location"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Customers Location"
         android:textStyle="bold" />
 
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/colorAccent" />
 </LinearLayout>

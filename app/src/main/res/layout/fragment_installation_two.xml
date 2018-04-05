@@ -1,15 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="12dp"
-    android:gravity="center"
-    android:background="@color/white"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<?xml version="1.0" encoding="utf-8"?><!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:orientation="vertical"--><!--android:padding="12dp"--><!--android:gravity="center"--><!--android:background="@color/white"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/bg_alertview"
     android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -136,13 +130,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-   <android.support.v7.widget.RecyclerView
+
+    <ListView
+        android:layout_height="match_parent"
        android:id="@+id/recyclerView"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content">
+        android:layout_marginTop="4dp">
 
-   </android.support.v7.widget.RecyclerView>
+    </ListView>
 
 
-</LinearLayout>
-</ScrollView>
+</LinearLayout><!--</ScrollView>-->

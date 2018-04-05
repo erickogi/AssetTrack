@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class AccessoriesModel implements Parcelable {
     private String id;
+    private String asset_id;
     private String name;
 
     public String getId() {

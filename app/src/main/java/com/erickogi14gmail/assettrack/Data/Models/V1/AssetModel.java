@@ -27,6 +27,17 @@ public class AssetModel implements Parcelable {
     private String department;
     private String roomsizestatus;
     private String room_meets_specification;
+    public static final Creator<AssetModel> CREATOR = new Creator<AssetModel>() {
+        @Override
+        public AssetModel createFromParcel(Parcel source) {
+            return new AssetModel(source);
+        }
+
+        @Override
+        public AssetModel[] newArray(int size) {
+            return new AssetModel[size];
+        }
+    };
     private String engineer_id;
     private String trainees;
     private String trainee_position;
@@ -265,46 +276,13 @@ public class AssetModel implements Parcelable {
         this.accessoriesModels = accessoriesModels;
     }
 
-    public static Creator<AssetModel> getCREATOR() {
-        return CREATOR;
-    }
 
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.asset_code);
-        dest.writeString(this.asset_image);
-        dest.writeString(this.asset_name);
-        dest.writeString(this.warranty);
-        dest.writeString(this.warranty_duration);
-        dest.writeString(this.model);
-        dest.writeString(this.serial);
-        dest.writeString(this.contract);
-        dest.writeString(this.asset_status);
-        dest.writeString(this.manufacturer);
-        dest.writeString(this.yr_of_manufacture);
-        dest.writeString(this.nextservicedate);
-        dest.writeString(this.contanct_person);
-        dest.writeString(this.customer_id);
-        dest.writeString(this.contact_person_position);
-        dest.writeString(this.department);
-        dest.writeString(this.roomsizestatus);
-        dest.writeString(this.room_meets_specification);
-        dest.writeString(this.engineer_id);
-        dest.writeString(this.trainees);
-        dest.writeString(this.trainee_position);
-        dest.writeString(this.engineer_remarks);
-        dest.writeString(this.installation_date);
-        dest.writeString(this.receiver_name);
-        dest.writeString(this.receiver_designation);
-        dest.writeString(this.receiver_comments);
-        dest.writeString(this.accessories);
-        dest.writeList(this.accessoriesModels);
-    }
+    private String room_explanation;
 
     public AssetModel() {
     }
@@ -328,6 +306,7 @@ public class AssetModel implements Parcelable {
         this.department = in.readString();
         this.roomsizestatus = in.readString();
         this.room_meets_specification = in.readString();
+        this.room_explanation = in.readString();
         this.engineer_id = in.readString();
         this.trainees = in.readString();
         this.trainee_position = in.readString();
@@ -337,19 +316,39 @@ public class AssetModel implements Parcelable {
         this.receiver_designation = in.readString();
         this.receiver_comments = in.readString();
         this.accessories = in.readString();
-        this.accessoriesModels = new ArrayList<AccessoriesModel>();
-        in.readList(this.accessoriesModels, AccessoriesModel.class.getClassLoader());
+        this.accessoriesModels = in.createTypedArrayList(AccessoriesModel.CREATOR);
     }
 
-    public static final Parcelable.Creator<AssetModel> CREATOR = new Parcelable.Creator<AssetModel>() {
-        @Override
-        public AssetModel createFromParcel(Parcel source) {
-            return new AssetModel(source);
-        }
-
-        @Override
-        public AssetModel[] newArray(int size) {
-            return new AssetModel[size];
-        }
-    };
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.asset_code);
+        dest.writeString(this.asset_image);
+        dest.writeString(this.asset_name);
+        dest.writeString(this.warranty);
+        dest.writeString(this.warranty_duration);
+        dest.writeString(this.model);
+        dest.writeString(this.serial);
+        dest.writeString(this.contract);
+        dest.writeString(this.asset_status);
+        dest.writeString(this.manufacturer);
+        dest.writeString(this.yr_of_manufacture);
+        dest.writeString(this.nextservicedate);
+        dest.writeString(this.contanct_person);
+        dest.writeString(this.customer_id);
+        dest.writeString(this.contact_person_position);
+        dest.writeString(this.department);
+        dest.writeString(this.roomsizestatus);
+        dest.writeString(this.room_meets_specification);
+        dest.writeString(this.room_explanation);
+        dest.writeString(this.engineer_id);
+        dest.writeString(this.trainees);
+        dest.writeString(this.trainee_position);
+        dest.writeString(this.engineer_remarks);
+        dest.writeString(this.installation_date);
+        dest.writeString(this.receiver_name);
+        dest.writeString(this.receiver_designation);
+        dest.writeString(this.receiver_comments);
+        dest.writeString(this.accessories);
+        dest.writeTypedList(this.accessoriesModels);
+    }
 }

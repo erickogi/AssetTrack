@@ -53,6 +53,7 @@ public class CustomerSearchAdapter extends RecyclerView.Adapter<CustomerSearchAd
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView txtCustomerName, txtCustomerLocation;
 
+
         MyViewHolder(View itemView) {
             super(itemView);
             txtCustomerName = itemView.findViewById(R.id.txt_customer_name);

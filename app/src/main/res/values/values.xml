@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorOverlay">#d2ffffff</color>-->
+    <!--<color name="divider">#d7d7db</color>-->
+    <!--<color name="negative">#ff3b30</color>-->
+    <!--<color name="others">#007aff</color>-->
+    <!--<color name="positive">#007aff</color>-->
+    <!--<color name="text_actionsheet_msg">#8f8f8f</color>-->
+    <!--<color name="text_actionsheet_title">#000000</color>-->
+    <!--<color name="text_default">#000000</color>-->
+    <!--<color name="text_input">#5c5c5c</color>-->
+    <!--<color name="transparent">#00FFFFFF</color>-->
+    <!--<dimen name="button_height">44dp</dimen>-->
+    <!--<dimen name="button_margin">10dp</dimen>-->
+    <!--<dimen name="button_text_size">16sp</dimen>-->
+    <!--<dimen name="dialogue_margin_side">30dp</dimen>-->
+    <!--<dimen name="dialogue_margin_side_land">50dp</dimen>-->
+    <!--<dimen name="dialogue_margin_top">30dp</dimen>-->
+    <!--<dimen name="radius_actionsheet">5dp</dimen>-->
+    <!--<dimen name="radius_dialogue">10dp</dimen>-->
+    <!--<dimen name="size_divider">1dp</dimen>-->
+    <!--<dimen name="text_input_margin_bottom">10dp</dimen>-->
+    <!--<dimen name="text_margin_border">18dp</dimen>-->
+    <!--<dimen name="text_margin_bottom">14dp</dimen>-->
+    <!--<dimen name="text_message_margin_bottom">4dp</dimen>-->
+    <!--<dimen name="text_message_margin_top">12dp</dimen>-->
+    <!--<dimen name="text_message_size">14sp</dimen>-->
+    <!--<dimen name="text_title_message_space">6dp</dimen>-->
+    <!--<dimen name="text_title_size">20sp</dimen>-->
+    <!--<style name="CustomActionsheetAnimation">-->
+    <!--<item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>-->
+    <!--<item name="android:windowExitAnimation">@anim/slide_out_bottom</item>-->
+    <!--</style>-->
+    <!--<style name="CustomDialog" parent="android:Theme.Dialog">-->
+    <!--<item name="android:windowNoTitle">true</item>-->
+    <!--<item name="android:windowFullscreen">true</item>-->
+    <!--<item name="android:windowContentOverlay">@null</item>-->
+    <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+    <!--<item name="android:backgroundDimEnabled">true</item>-->
+    <!--<item name="android:backgroundDimAmount">0.5</item>-->
+    <!--<item name="android:windowIsFloating">false</item>-->
+    <!--<item name="android:gravity">center</item>-->
+    <!--</style>-->
+    <!--<style name="CustomDialogAnimation">-->
+    <!--<item name="android:windowEnterAnimation">@anim/fade_in_center</item>-->
+    <!--<item name="android:windowExitAnimation">@anim/fade_out_center</item>-->
+    <!--</style>-->
+</resources>

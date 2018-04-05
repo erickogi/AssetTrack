@@ -106,7 +106,7 @@ public class InstallationStepOne extends Fragment implements BlockingStep,Dialog
 
     private void dialogSelectCustomer(LinkedList<CustomerModel> customerModels) {
         FragmentManager fm = getFragmentManager();
-        DialogSearchCustomer dialogSearch = DialogSearchCustomer.newInstance("Customer", 1, customerModels);
+        DialogSearchCustomer dialogSearch = DialogSearchCustomer.newInstance("Clients", 1, customerModels);
         // dialogSearch.show(fm,"dialog");
 
         dialogSearch.setTargetFragment(InstallationStepOne.this, 300);
@@ -194,24 +194,14 @@ public class InstallationStepOne extends Fragment implements BlockingStep,Dialog
         show();
     }
     private boolean verify(){
-        if(isTextInputEditTextFilled(edtAssetName)
-                &&isRadioGroupChecked(rgWarranty)
-                &&isTextInputEditTextFilled(edtModel)
-                &&isTextInputEditTextFilled(edtSerialNo)
-                &&isTextInputEditTextFilled(edtManufacturer)
-                &&isTextInputEditTextFilled(edtYrOfManufacture)
-                &&isTextInputEditTextFilled(edtServiceContract)
-                &&isStringValid(customerID)
-
-
-
-
-
-
-                ){
-            return true;
-        }
-        return false;
+        return isTextInputEditTextFilled(edtAssetName)
+                && isRadioGroupChecked(rgWarranty)
+                && isTextInputEditTextFilled(edtModel)
+                && isTextInputEditTextFilled(edtSerialNo)
+                && isTextInputEditTextFilled(edtManufacturer)
+                && isTextInputEditTextFilled(edtYrOfManufacture)
+                && isTextInputEditTextFilled(edtServiceContract)
+                && isStringValid(customerID);
     }
     private boolean isStringValid(String s){
         if(s==null){

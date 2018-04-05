@@ -21,7 +21,6 @@ import com.erickogi14gmail.assettrack.R;
 import com.erickogi14gmail.assettrack.Utills.RecyclerTouchListener;
 
 import java.util.LinkedList;
-import java.util.Objects;
 
 /**
  * Created by Eric on 11/30/2017.
@@ -30,6 +29,7 @@ import java.util.Objects;
 public class DialogSearchCustomer extends android.support.v4.app.DialogFragment {
 
 
+    private RecyclerView recyclerView;
     private StaggeredGridLayoutManager mStaggeredLayoutManager;
     private CustomerSearchAdapter customerSearchAdapter;
     private int type = 1;
@@ -80,7 +80,7 @@ public class DialogSearchCustomer extends android.support.v4.app.DialogFragment 
         type = getArguments().getInt("type");
 
         // Get field from view
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView = view.findViewById(R.id.recycler_view);
         customerModelsFull = (LinkedList<CustomerModel>) getArguments().getSerializable("data");
         for (CustomerModel customerModel : customerModelsFull) {
             Log.d("dla", "" + customerModel.getName());
@@ -144,7 +144,7 @@ public class DialogSearchCustomer extends android.support.v4.app.DialogFragment 
                     customerModelsFilterd.clear();
                     //  Log.d("TRW",customerModelsFull.get(0).getName());
 
-                    for (CustomerModel customerModel : (LinkedList<CustomerModel>) Objects.requireNonNull(getArguments().getParcelable("data"))) {
+                    for (CustomerModel customerModel : (LinkedList<CustomerModel>) getArguments().getParcelable("data")) {
                         Log.d("hersdata", customerModel.getName());
                         if (customerModel.getName().toLowerCase().contains(newText.toLowerCase()) || customerModel.getPhysical_address().toLowerCase().contains(newText.toLowerCase())) {
                             customerModelsFilterd.add(customerModel);

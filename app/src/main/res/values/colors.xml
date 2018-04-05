@@ -5,6 +5,7 @@
     <color name="colorAccent">#9E9E9E </color>
     <color name="colorA">#65D7A0</color>
     <color name="colorB">#C6DCF7 </color>
+    <color name="colorOver">#c8f8f8f8</color>
 
 
     <!--<color name="colorPrimary">#28C678 </color>-->
@@ -19,7 +20,7 @@
 
     <color name="primaryText">#212121</color>
     <color name="secondaryText">#757575</color>
-    <color name="divider">#BDBDBD</color>
+    <color name="divideer">#BDBDBD</color>
 
 
 
@@ -27,8 +28,20 @@
     <color name="drawertext">#000000</color>
 
 
-    <color name="transparent">#00000000</color>
+    <color name="transparentm">#00000000</color>
 
 
     <color name="material_orange_500">#f8971c</color>
+
+
+    <color name="colorOverlay">#d2ffffff</color>
+    <color name="divider">#d7d7db</color>
+    <color name="negative">#ff3b30</color>
+    <color name="others">#007aff</color>
+    <color name="positive">#007aff</color>
+    <color name="text_actionsheet_msg">#8f8f8f</color>
+    <color name="text_actionsheet_title">#000000</color>
+    <color name="text_default">#000000</color>
+    <color name="text_input">#5c5c5c</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

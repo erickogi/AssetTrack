@@ -67,6 +67,7 @@ public class DbConstants {
     public static final  String CONTACT_PERSON_POSITION="     contact_person_position";
     public static final  String DEPARTMENT="department";
     public static final  String ROOMSIZESTATUS="roomsizestatus";
+    public static final String ROOM_EXPLANATION = "room_explanation";
     public static final  String ROOM_MEETS_SPECIFICATION="room_meets_specification";
     public static final  String ENGINEER_ID="engineer_id";
     public static final  String TRAINEES="trainees";
@@ -76,8 +77,6 @@ public class DbConstants {
     public static final  String RECIEVERS_NAME="receiver_name";
     public static final  String RECEIVER_DESIGNATION="receiver_designation";
     public static final  String RECEIVER_COMMENTS="receiver_comments";
-
-
     public static final  String ACCESSORIES="accessories";
     private ArrayList<AccessoriesModel> accessoriesModels;
 
@@ -92,12 +91,14 @@ public class DbConstants {
     public static final  String FAILURE_DESC="failure_desc";
     public static final  String FAILURE_SOLN="failure_soln";
     public static final  String PARTS_CHANGED="parts_changed";
-    public static final  String PARTS_NEEDED="parts_needed";
-    public static final  String ISSUES_STATUS="issues_status";
+    public static final String PARTS = "parts";
+    public static final String ISSUE_STATUS = "issue_status";
     public static final  String SAFETY="safety";
     public static final  String ENGINEER_COMMENT="engineer_comment";
     public static final  String CUSTOMER_COMMENT="customer_comment";
-    public static final  String WORK_TICKETS="work_tickets";
+    public static final String WORK_TICKET = "work_ticket";
+
+
 
 
 

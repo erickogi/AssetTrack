@@ -3,6 +3,8 @@ package com.erickogi14gmail.assettrack.Data.Models.V1;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class IssueModel implements Parcelable {
     private String asset_id;
     private String asset_code;
@@ -13,16 +15,41 @@ public class IssueModel implements Parcelable {
     private String labour_hours;
     private String failure_desc;
     private String failure_soln;
-    private String parts_changed;
-    private String parts_needed;
-    private String issues_status;
+    private String parts;
+    private String issue_status;
     private String safety;
     private String engineer_comment;
     private String engineer_id;
     private String customer_comment;
     private String customer_id;
-    private String work_tickets;
+    private String work_ticket;
 
+    private ArrayList<PartsModel> partsModels;
+
+    protected IssueModel(Parcel in) {
+        this.asset_id = in.readString();
+        this.asset_code = in.readString();
+        this.date = in.readString();
+        this.nextduedervice = in.readString();
+        this.travel_hours = in.readString();
+        this.labour_hours = in.readString();
+        this.failure_desc = in.readString();
+        this.failure_soln = in.readString();
+        this.parts = in.readString();
+        this.issue_status = in.readString();
+        this.safety = in.readString();
+        this.engineer_comment = in.readString();
+        this.engineer_id = in.readString();
+        this.customer_comment = in.readString();
+        this.customer_id = in.readString();
+        this.work_ticket = in.readString();
+        this.partsModels = new ArrayList<PartsModel>();
+        in.readList(this.partsModels, PartsModel.class.getClassLoader());
+    }
+
+    public ArrayList<PartsModel> getPartsModels() {
+        return partsModels;
+    }
 
     public String getAsset_id() {
         return asset_id;
@@ -88,28 +115,20 @@ public class IssueModel implements Parcelable {
         this.failure_soln = failure_soln;
     }
 
-    public String getParts_changed() {
-        return parts_changed;
+    public void setPartsModels(ArrayList<PartsModel> partsModels) {
+        this.partsModels = partsModels;
     }
 
-    public void setParts_changed(String parts_changed) {
-        this.parts_changed = parts_changed;
+    public String getParts() {
+        return parts;
     }
 
-    public String getParts_needed() {
-        return parts_needed;
+    public void setParts(String parts) {
+        this.parts = parts;
     }
 
-    public void setParts_needed(String parts_needed) {
-        this.parts_needed = parts_needed;
-    }
-
-    public String getIssues_status() {
-        return issues_status;
-    }
-
-    public void setIssues_status(String issues_status) {
-        this.issues_status = issues_status;
+    public String getIssue_status() {
+        return issue_status;
     }
 
     public String getSafety() {
@@ -152,21 +171,25 @@ public class IssueModel implements Parcelable {
         this.customer_id = customer_id;
     }
 
-    public String getWork_tickets() {
-        return work_tickets;
+    public void setIssue_status(String issue_status) {
+        this.issue_status = issue_status;
     }
 
-    public void setWork_tickets(String work_tickets) {
-        this.work_tickets = work_tickets;
+    public String getWork_ticket() {
+        return work_ticket;
     }
 
-    public static Creator<IssueModel> getCREATOR() {
-        return CREATOR;
-    }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public void setWork_ticket(String work_ticket) {
+        this.work_ticket = work_ticket;
+    }
+
+    public IssueModel() {
     }
 
     @Override
@@ -179,38 +202,15 @@ public class IssueModel implements Parcelable {
         dest.writeString(this.labour_hours);
         dest.writeString(this.failure_desc);
         dest.writeString(this.failure_soln);
-        dest.writeString(this.parts_changed);
-        dest.writeString(this.parts_needed);
-        dest.writeString(this.issues_status);
+        dest.writeString(this.parts);
+        dest.writeString(this.issue_status);
         dest.writeString(this.safety);
         dest.writeString(this.engineer_comment);
         dest.writeString(this.engineer_id);
         dest.writeString(this.customer_comment);
         dest.writeString(this.customer_id);
-        dest.writeString(this.work_tickets);
-    }
-
-    public IssueModel() {
-    }
-
-    protected IssueModel(Parcel in) {
-        this.asset_id = in.readString();
-        this.asset_code = in.readString();
-        this.date = in.readString();
-        this.nextduedervice = in.readString();
-        this.travel_hours = in.readString();
-        this.labour_hours = in.readString();
-        this.failure_desc = in.readString();
-        this.failure_soln = in.readString();
-        this.parts_changed = in.readString();
-        this.parts_needed = in.readString();
-        this.issues_status = in.readString();
-        this.safety = in.readString();
-        this.engineer_comment = in.readString();
-        this.engineer_id = in.readString();
-        this.customer_comment = in.readString();
-        this.customer_id = in.readString();
-        this.work_tickets = in.readString();
+        dest.writeString(this.work_ticket);
+        dest.writeList(this.partsModels);
     }
 
     public static final Parcelable.Creator<IssueModel> CREATOR = new Parcelable.Creator<IssueModel>() {

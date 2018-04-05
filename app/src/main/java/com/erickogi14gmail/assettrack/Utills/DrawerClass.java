@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.Toolbar;
 
-import com.erickogi14gmail.assettrack.Data.UserModel;
+import com.erickogi14gmail.assettrack.Data.Models.V1.UserModel;
 import com.erickogi14gmail.assettrack.R;
 import com.erickogi14gmail.assettrack.Utills.UtilListeners.DrawerItemListener;
 import com.mikepenz.materialdrawer.AccountHeader;

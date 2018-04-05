@@ -35,6 +35,7 @@ import com.erickogi14gmail.assettrack.Data.Sqlite.DbOperations;
 import com.erickogi14gmail.assettrack.R;
 import com.erickogi14gmail.assettrack.Utills.Constants;
 import com.erickogi14gmail.assettrack.Utills.MyToast;
+import com.erickogi14gmail.assettrack.Views.V1.Installation;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
@@ -207,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
-                        startActivity(new Intent(MainActivity.this,CreateAsset.class));
+                        startActivity(new Intent(MainActivity.this,Installation.class));
 //                            Intent intent =new Intent(MainActivity.this,AssetActivity.class);
 //                            intent.putExtra("key_id",Constants.id);
 //                            startActivity(intent);

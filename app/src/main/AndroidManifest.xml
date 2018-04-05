@@ -43,6 +43,14 @@
         <activity
             android:name=".Views.AssetList"
             android:label="@string/title_activity_asset_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.V1.Installation"
+            android:label="@string/title_activity_installation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.V1.Service"
+            android:label="@string/title_activity_service"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -3,6 +3,8 @@ package com.erickogi14gmail.assettrack.Data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.erickogi14gmail.assettrack.Data.Models.V1.UserModel;
+
 /**
  * Created by Eric on 1/5/2018.
  */

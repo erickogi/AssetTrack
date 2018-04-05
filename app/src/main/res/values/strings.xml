@@ -5,4 +5,28 @@
     <string name="title_activity_login">AsseTrack</string>
     <string name="title_activity_create_asset">Create New Asset</string>
     <string name="title_activity_asset_list">AsseTrack</string>
+    <string name="title_activity_installation">Installation</string>
+    <string name="title_activity_service">Service</string>
+    <string name="select_customer">Select Customer</string>
+    <string name="asset_name">Asset Name</string>
+
+    <string name="duration">Duration (Yrs)</string>
+    <string name="model">Model</string>
+    <string name="serial_no">Serial No</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="year_of_manufacture">Year Of Manufacture</string>
+    <string name="servce_contract">Servce Contract</string>
+    <string name="contact_person">Contact Person</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="explain">Explain</string>
+    <string name="trainees">Trainees</string>
+    <string name="okay">Okay</string>
+    <string name="engineer_s_remarks">Engineer\'s Remarks</string>
+    <string name="customers_s_remarks">Customers\'s Remarks</string>
+    <string name="scan_code">Scan Code</string>
+    <string name="asset_image">Asset Image</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="warranty">Warranty</string>
 </resources>

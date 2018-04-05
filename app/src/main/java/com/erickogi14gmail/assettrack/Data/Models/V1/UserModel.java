@@ -1,4 +1,4 @@
-package com.erickogi14gmail.assettrack.Data;
+package com.erickogi14gmail.assettrack.Data.Models.V1;
 
 /**
  * Created by Eric on 1/5/2018.

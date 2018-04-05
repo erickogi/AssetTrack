@@ -1,5 +1,7 @@
 package com.erickogi14gmail.assettrack.Data;
 
+import com.erickogi14gmail.assettrack.Data.Models.V1.UserModel;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -46,11 +46,15 @@ public class DbConstants {
     public static final  String parts_used="parts_used";
     public static final  String parts_needed="parts_needed";
     public static final  String next_service="next_service";
+    public static final String cusomerremarks = "customer_remarks";
+    public static final String engineersremarks = "engineers_remarks";
+    public static final String travelhours = "travelhours";
+    public static final String labourhours = "labourhours";
 
 
 
     //Asset
-    public static final  String ASSET_CODE="asset=code";
+    public static final String ASSET_CODE = "assetcode";
     public static final  String ASSET_IMAGE="asset_image";
     public static final  String ASSET_NAME="asset_name";
     public static final  String WARRANTY="warranty";
@@ -59,12 +63,13 @@ public class DbConstants {
     public static final  String SERIAL="serial";
     public static final  String CONTRACT="contract";
     public static final  String ASSET_STATUS="asset_status";
+    public static final String ASSET_STATUS_ID = "asset_status_id";
     public static final  String MANUFACTURER="manufacturer";
     public static final  String YR_OF_MANUFACTURE="yr_of_manufacture";
     public static final  String NEXTSERVICEDATE="nextservicedate";
     public static final  String CONTANCT_PERSON="contanct_person";
     public static final  String CUSTOMER_ID="customer_id";
-    public static final  String CONTACT_PERSON_POSITION="     contact_person_position";
+    public static final String CONTACT_PERSON_POSITION = "contact_person_position";
     public static final  String DEPARTMENT="department";
     public static final  String ROOMSIZESTATUS="roomsizestatus";
     public static final String ROOM_EXPLANATION = "room_explanation";
@@ -78,7 +83,10 @@ public class DbConstants {
     public static final  String RECEIVER_DESIGNATION="receiver_designation";
     public static final  String RECEIVER_COMMENTS="receiver_comments";
     public static final  String ACCESSORIES="accessories";
-    private ArrayList<AccessoriesModel> accessoriesModels;
+    public static final String TABLE_ITEMS_V1 = "assetsv1";
+    public static final String TABLE_CLIENT = "client";
+    public static final String TABLE_STATUS = "statuses";
+    public static final ArrayList<AccessoriesModel> accessoriesModels = null;
 
 
 
@@ -98,6 +106,37 @@ public class DbConstants {
     public static final  String CUSTOMER_COMMENT="customer_comment";
     public static final String WORK_TICKET = "work_ticket";
 
+
+    //ENGINEER
+    public static final String id = "eng_id";
+    public static final String TABLE_ENG_V1 = "table_eng_v1";
+    public static final String name = "eng_name";
+    public static final String email = "eng_email";
+    public static final String phone = "eng_phone";
+    public static final String first_name = "eng_f_name";
+    public static final String last_name = "eng_l_name";
+    public static final String speciality = "eng_speciality";
+    public static final String location = "eng_location";
+    public static final String engagement = "eng_engagement";
+    public static final String national_id = "eng_national_id";
+    public static final String current_work_card_id = "eng_work_card";
+    public static final String current_asset_id = "eng_current_asset_id";
+    public static final String current_issue = "eng_current_issue";
+    public static final String current_location = "eng_current_location";
+
+
+    //CLIENTS
+    public static final String cust_id = "customer_id";
+    public static final String cust_name = "customer_name";
+    public static final String cust_email = "customer_email";
+    public static final String cust_address = "customer_address";
+    public static final String cust_telephone = "customer_telephone";
+    public static final String cust_physical_address = "customer_physical";
+
+    //STATUS
+    public static final String status = "status_name";
+    public static final String status_id = "status_id";
+    public static final String status_color = "status_color";
 
 
 

@@ -1,6 +1,6 @@
 package com.erickogi14gmail.assettrack.Utills.UtilListeners;
 
-import android.widget.ImageView;
+import android.view.View;
 
 /**
  * Created by Eric on 12/18/2017.
@@ -11,7 +11,11 @@ public interface OnclickRecyclerListener {
 
     void onLongClickListener(int position);
 
-    void onClickListener(int adapterPosition, ImageView imageView);
+    void onCheckedClickListener(int position);
+
+    void onMoreClickListener(int position);
+
+    void onClickListener(int adapterPosition, View view);
 
     // void onDeleteListener(int adapterPosition);
 }

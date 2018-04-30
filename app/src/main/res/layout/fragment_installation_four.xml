@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_alertview"
+    android:gravity="center"
+
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/corner_border_transaparent"
+        android:gravity="center"
+
+
+        android:orientation="vertical"
+        android:padding="12dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="Asset Status at Installation"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rgrp_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <RadioButton
+                android:id="@+id/rbtn_okay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/okay" />
+
+            <RadioButton
+                android:id="@+id/rbtn_faulty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Faulty" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edt_scan_code"
+
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+
+                    android:hint="@string/scan_code"
+                    android:textColor="@color/colorPrimaryDark" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--<EditText-->
+            <!--android:id="@+id/edt_scan_code"-->
+            <!--android:layout_margin="2dp"-->
+            <!--android:textColor="@color/colorPrimaryDark"-->
+            <!---->
+            <!--android:hint="@string/scan_code"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        </LinearLayout>
+
+        <Button
+
+            android:id="@+id/btn_asset_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/asset_image"
+            android:textColor="@color/white" />
+
+        <ImageView
+
+            android:id="@+id/asset_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="2dp"
+            android:src="@drawable/code"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</ScrollView>

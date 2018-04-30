@@ -31,6 +31,8 @@ public class PrefManager {
 
     private static final String PICCASA_WEB_USERID="picassauserid";
 
+    private static final String USERTYPE = "usertype";
+
     // Shared Preferences
     SharedPreferences pref;
     // Editor for Shared preferences
@@ -50,8 +52,14 @@ public class PrefManager {
     public boolean isLoggedIn() {
         return pref.getBoolean(KEY_IS_LOGGED_IN, false);
     }
-    public void setIsLoggedIn(boolean isLoggedIn) {
+
+    public int getUserType() {
+        return pref.getInt(USERTYPE, 1);
+    }
+
+    public void setIsLoggedIn(boolean isLoggedIn, int usertype) {
         editor.putBoolean(KEY_IS_LOGGED_IN, isLoggedIn);
+        editor.putInt(USERTYPE, usertype);
         editor.commit();
     }
 

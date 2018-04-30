@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AssetTrack.iml" filepath="$PROJECT_DIR$/AssetTrack.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kogi/kogi.iml" filepath="$PROJECT_DIR$/kogi/kogi.iml" />
     </modules>
   </component>
 </project>

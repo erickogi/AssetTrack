@@ -18,7 +18,9 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.erickogi14gmail.assettrack.Data.Models.V1.AssetModel;
 import com.erickogi14gmail.assettrack.Data.Models.V1.CustomerModel;
+import com.erickogi14gmail.assettrack.GLConstants;
 import com.erickogi14gmail.assettrack.R;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
@@ -32,7 +34,8 @@ public class InstallationStepOne extends Fragment implements BlockingStep,Dialog
 
     private View view;
     private Button btnSelectCustomer;
-    private TextInputEditText edtAssetName,edtWarranty,edtWarrantyDuration,edtModel,edtSerialNo,edtManufacturer,edtYrOfManufacture,edtServiceContract;
+    private TextInputEditText edtAssetName, edtWarranty, edtWarrantyDuration, edtModel,
+            edtSerialNo, edtManufacturer, edtYrOfManufacture, edtServiceContract, edtCustomerName;
 
     private TextInputLayout tilWarrantyDuration;
     private RadioGroup rgWarranty;
@@ -69,10 +72,58 @@ public class InstallationStepOne extends Fragment implements BlockingStep,Dialog
         rbNo=view.findViewById(R.id.rbtn_warranty_no);
         rbYes=view.findViewById(R.id.rbtn_warranty_yes);
 
+        edtCustomerName = view.findViewById(R.id.edt_customer_name);
+
+
 
 
         UiActions();
+        initData();
     }
+
+    private void initData() {
+
+        if (GLConstants.assetModel != null) {
+            AssetModel assetModel = GLConstants.assetModel;
+            if (GLConstants.assetModel.getCustomer_name() != null) {
+                customerID = assetModel.getCustomer_id();
+                edtCustomerName.setText(assetModel.getCustomer_name());
+
+            }
+            if (assetModel.getAsset_name() != null) {
+                edtAssetName.setText(assetModel.getAsset_name());
+            }
+            if (assetModel.getWarranty() != null && assetModel.getWarranty().equals("Yes")) {
+                rbYes.setChecked(true);
+                edtWarrantyDuration.setVisibility(View.VISIBLE);
+                edtWarrantyDuration.setText(assetModel.getWarranty_duration());
+                rbNo.setChecked(false);
+            } else if (assetModel.getWarranty() != null && assetModel.getWarranty().equals("No")) {
+                rbNo.setChecked(true);
+                edtWarrantyDuration.setVisibility(View.GONE);
+                rbYes.setChecked(false);
+            }
+            if (assetModel.getModel() != null) {
+                edtModel.setText(assetModel.getModel());
+            }
+            if (assetModel.getSerial() != null) {
+                edtSerialNo.setText(assetModel.getSerial());
+            }
+            if (assetModel.getYr_of_manufacture() != null) {
+                edtYrOfManufacture.setText(assetModel.getYr_of_manufacture());
+            }
+            if (assetModel.getManufacturer() != null) {
+                edtManufacturer.setText(assetModel.getManufacturer());
+            }
+            if (assetModel.getContract() != null) {
+                edtServiceContract.setText(assetModel.getContract());
+            }
+        } else {
+
+            //snack("null");
+        }
+    }
+
     LinkedList<CustomerModel> getCustomers(){
         LinkedList<CustomerModel> customerModels=new LinkedList<>();
 
@@ -87,11 +138,18 @@ public class InstallationStepOne extends Fragment implements BlockingStep,Dialog
         }
         return customerModels;
     }
+
+    private void snack(String msg) {
+        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
+    }
     void UiActions(){
         btnSelectCustomer.setOnClickListener(view ->
 
                 dialogSelectCustomer(getCustomers()));
 
+
+        edtCustomerName.setOnClickListener(view1 -> dialogSelectCustomer(getCustomers()));
         edtYrOfManufacture.setOnClickListener(this::onClick);
 
 
@@ -148,6 +206,31 @@ public class InstallationStepOne extends Fragment implements BlockingStep,Dialog
     @Override
     public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
 
+        if (GLConstants.assetModel == null) {
+            GLConstants.assetModel = new AssetModel();
+
+            GLConstants.assetModel.setCustomer_id(customerID);
+            GLConstants.assetModel.setAsset_name(edtAssetName.getText().toString());
+            GLConstants.assetModel.setCustomer_name(edtCustomerName.getText().toString());
+            GLConstants.assetModel.setWarranty(getRadioChecked(rgWarranty));
+            GLConstants.assetModel.setModel(edtModel.getText().toString());
+            GLConstants.assetModel.setSerial(edtSerialNo.getText().toString());
+            GLConstants.assetModel.setManufacturer(edtManufacturer.getText().toString());
+            GLConstants.assetModel.setYr_of_manufacture(edtYrOfManufacture.getText().toString());
+            GLConstants.assetModel.setContract(edtServiceContract.getText().toString());
+
+
+        } else {
+            GLConstants.assetModel.setCustomer_id(customerID);
+            GLConstants.assetModel.setCustomer_name(edtCustomerName.getText().toString());
+            GLConstants.assetModel.setWarranty(getRadioChecked(rgWarranty));
+            GLConstants.assetModel.setModel(edtModel.getText().toString());
+            GLConstants.assetModel.setSerial(edtSerialNo.getText().toString());
+            GLConstants.assetModel.setManufacturer(edtManufacturer.getText().toString());
+            GLConstants.assetModel.setYr_of_manufacture(edtYrOfManufacture.getText().toString());
+            GLConstants.assetModel.setContract(edtServiceContract.getText().toString());
+
+        }
         callback.goToNextStep();
     }
 
@@ -188,6 +271,7 @@ public class InstallationStepOne extends Fragment implements BlockingStep,Dialog
     public void onSelected(CustomerModel model) {
         customerID=model.getId();
         btnSelectCustomer.setText(model.getName());
+        edtCustomerName.setText(model.getName());
     }
 
     private void onClick(View view) {
@@ -220,15 +304,22 @@ public class InstallationStepOne extends Fragment implements BlockingStep,Dialog
         }
         return true;
     }
+
+    private String getRadioChecked(RadioGroup r) {
+        if (r.getCheckedRadioButtonId() == R.id.rbtn_warranty_yes) {
+            return "Yes";
+        } else {
+            return "No";
+        }
+    }
     private boolean isRadioGroupChecked(RadioGroup r){
         if(r.getCheckedRadioButtonId()==-1){
 
             Snackbar.make(r, "Select an option for warranty", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return false;
-        }
-        else {
-            return rgWarranty.getCheckedRadioButtonId() == R.id.rbtn_warranty_yes && isTextInputEditTextFilled(edtWarrantyDuration);
+        } else {
+            return true;
         }
     }
 }

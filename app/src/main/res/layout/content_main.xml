@@ -3,181 +3,368 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginBottom="40dp"
+
     android:background="@color/white"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.erickogi14gmail.assettrack.Views.MainActivity"
     tools:showIn="@layout/activity_main">
 
-
     <LinearLayout
-        android:visibility="gone"
-        android:layout_marginTop="12dp"
-        android:orientation="vertical"
+        android:id="@+id/layout1"
+
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.CardView
-            app:cardUseCompatPadding="true"
-            app:cardElevation="3dp"
-            app:cardCornerRadius="2dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-               android:layout_width="match_parent"
-                android:layout_height="116dp">
-                <ImageView
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <RelativeLayout
 
 
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginEnd="6dp"
-                    android:src="@drawable/ic_add_assw"
-
-                    android:layout_marginRight="6dp" />
-                <TextView
-                    android:fontFamily="sans-serif"
-                    android:textStyle="normal"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:gravity="center_vertical"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:text="Add New Asset Capture Barcode  Tag "
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            app:cardUseCompatPadding="true"
-            app:cardElevation="3dp"
-            app:cardCornerRadius="2dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="116dp">
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <ImageView
+                    android:id="@+id/profile"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/ic_person_black_24dp"
+                    android:padding="10dp" />
 
+                <LinearLayout
 
-                   android:layout_marginEnd="6dp"
-                    android:src="@drawable/ic_list"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="6dp" />
-                <TextView
-                    android:fontFamily="sans-serif"
-                    android:textStyle="normal"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:gravity="center_vertical"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:text="Review Asset List By Category/ Audit Assets"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_toRightOf="@+id/profile"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Logged In As : Eric "
+                        android:textStyle="bold" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="3dp"
+                        android:background="@color/lightgray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="eric@zalego.co.ke"
+                        android:textColor="@android:color/darker_gray" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:onClick="moveIssue"
-            app:cardUseCompatPadding="true"
-            app:cardElevation="3dp"
-            app:cardCornerRadius="2dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="116dp">
-                <ImageView
 
-
-                    android:layout_marginEnd="6dp"
-                    android:src="@drawable/ic_transfer"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="6dp" />
-                <TextView
-                    android:fontFamily="sans-serif"
-                    android:textStyle="normal"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:gravity="center_vertical"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:text="Move/Issue Assets "
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
 
     </LinearLayout>
-    <TextView
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:layout_centerInParent="true"
-        android:visibility="visible"
-        android:layout_marginTop="4dp"
-        android:textStyle="bold"
-        android:padding="4dp"
-        android:layout_centerHorizontal="true"
-        android:text="Click On the button bellow to procced"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <ImageView
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout1"
+        android:scrollbars="vertical">
 
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/curved"
-        android:src="@drawable/ic_done_color_24dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+
+            android:layout_margin="3dp"
+            android:background="@drawable/corner_border_transaparent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/bankcardId"
+                    android:layout_width="0dp"
+                    android:layout_height="190dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="scan">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/cerclebackgroundpurple"
+                            android:padding="10dp"
+                            android:src="@drawable/code_bar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="SCAN  ASSET"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="10dp"
+                            android:background="@color/lightgray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Find asset by scanning a bar code"
+                            android:textColor="@android:color/darker_gray" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="190dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="entercode">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/cerclebackgroundpink"
+                            android:padding="10dp"
+                            android:src="@drawable/code" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="ASSET CODE"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="10dp"
+                            android:background="@color/lightgray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Find asset by its unique code"
+                            android:textColor="@android:color/darker_gray" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="190dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="assignments">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/cerclebackgroundgreen"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_list" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="ASSIGNMENTS"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="10dp"
+                            android:background="@color/lightgray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="View Assigned Tasks"
+                            android:textColor="@android:color/darker_gray" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="190dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="addNewAsset">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/cerclebackgroundyello"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_add_black_24dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="ADD NEW ASSET"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="10dp"
+                            android:background="@color/lightgray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Add a new asset "
+                            android:textColor="@android:color/darker_gray" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:visibility="gone"
-        android:layout_marginBottom="40dp"
-
-
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_dehaze_black_24dp" />
-
-    <com.nightonke.boommenu.BoomMenuButton
-
-        app:bmb_dotRadius="0dp"
-
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/curved"
-        android:id="@+id/bmb"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:bmb_buttonEnum="ham">
-        <ImageView
+    <!--<TextView-->
+    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:visibility="gone"-->
+    <!--android:layout_marginTop="4dp"-->
+    <!--android:textStyle="bold"-->
+    <!--android:padding="4dp"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:text="Click On the button bellow to procced"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
+    <!--<ImageView-->
 
 
-            android:visibility="gone"
-            android:id="@+id/img_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_add_white_24dp"
-            android:layout_gravity="center" />
-    </com.nightonke.boommenu.BoomMenuButton>
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
+    <!--<ImageView-->
+    <!--android:visibility="gone"-->
+    <!--android:id="@+id/curved"-->
+    <!--android:src="@drawable/ic_done_color_24dp"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
+
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/fab"-->
+    <!--android:visibility="gone"-->
+    <!--android:layout_marginBottom="40dp"-->
+
+
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--android:src="@drawable/ic_dehaze_black_24dp" />-->
+
+    <!--<com.nightonke.boommenu.BoomMenuButton-->
+
+    <!--app:bmb_dotRadius="0dp"-->
+
+    <!--android:visibility="gone"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_below="@+id/curved"-->
+    <!--android:id="@+id/bmb"-->
+
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:bmb_buttonEnum="ham">-->
+    <!--<ImageView-->
+
+
+    <!--android:visibility="gone"-->
+    <!--android:id="@+id/img_btn"-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:src="@drawable/ic_add_white_24dp"-->
+    <!--android:layout_gravity="center" />-->
+    <!--</com.nightonke.boommenu.BoomMenuButton>-->
 
 
 

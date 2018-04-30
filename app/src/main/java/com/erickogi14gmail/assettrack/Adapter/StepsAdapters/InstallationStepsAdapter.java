@@ -6,6 +6,7 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 
+import com.erickogi14gmail.assettrack.Views.V1.InstallationSteps.InstallationStepFour;
 import com.erickogi14gmail.assettrack.Views.V1.InstallationSteps.InstallationStepOne;
 import com.erickogi14gmail.assettrack.Views.V1.InstallationSteps.InstallationStepThree;
 import com.erickogi14gmail.assettrack.Views.V1.InstallationSteps.InstallationStepTwo;
@@ -45,6 +46,14 @@ public class InstallationStepsAdapter extends AbstractFragmentStepAdapter {
 
                 return step3;
 
+            case 3:
+                final InstallationStepFour step4 = new InstallationStepFour();
+                Bundle b4 = new Bundle();
+                b4.putInt(CURRENT_STEP_POSITION_KEY, position);
+
+
+                return step4;
+
 
 
 
@@ -54,7 +63,7 @@ public class InstallationStepsAdapter extends AbstractFragmentStepAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @NonNull
@@ -72,6 +81,10 @@ public class InstallationStepsAdapter extends AbstractFragmentStepAdapter {
                         .setTitle("Customer Details") //can be a CharSequence instead
                         .create();
             case 2:
+                return new StepViewModel.Builder(context)
+                        .setTitle("Location Details") //can be a CharSequence instead
+                        .create();
+            case 3:
                 return new StepViewModel.Builder(context)
                         .setTitle("Final Step") //can be a CharSequence instead
                         .create();

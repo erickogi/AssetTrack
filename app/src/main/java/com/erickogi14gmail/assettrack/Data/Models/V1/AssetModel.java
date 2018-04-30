@@ -3,9 +3,11 @@ package com.erickogi14gmail.assettrack.Data.Models.V1;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AssetModel implements Parcelable {
+public class AssetModel implements Parcelable, Serializable {
+    private int KEYID;
     private String asset_code;
     private String asset_image;
     private String asset_name;
@@ -17,16 +19,22 @@ public class AssetModel implements Parcelable {
 
     private String contract;
     private String asset_status;
+    private String asset_status_id;
 
     private String manufacturer;
     private String yr_of_manufacture;
     private String nextservicedate;
     private String contanct_person;
     private String customer_id;
+    private String customer_name;
     private String contact_person_position;
     private String department;
     private String roomsizestatus;
     private String room_meets_specification;
+
+
+    private boolean isChecked;
+
     public static final Creator<AssetModel> CREATOR = new Creator<AssetModel>() {
         @Override
         public AssetModel createFromParcel(Parcel source) {
@@ -49,8 +57,50 @@ public class AssetModel implements Parcelable {
 
 
     private String accessories;
-    private ArrayList<AccessoriesModel> accessoriesModels;
 
+    private ArrayList<AccessoriesModel> accessoriesModels;
+    // private ArrayList<Tt>
+
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public String getAsset_status_id() {
+        return asset_status_id;
+    }
+
+    public void setAsset_status_id(String asset_status_id) {
+        this.asset_status_id = asset_status_id;
+    }
+
+    public int getKEYID() {
+        return KEYID;
+    }
+
+    public void setKEYID(int KEYID) {
+        this.KEYID = KEYID;
+    }
+
+    public String getCustomer_name() {
+        return customer_name;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
+    }
+
+    public String getRoom_explanation() {
+        return room_explanation;
+    }
+
+    public void setRoom_explanation(String room_explanation) {
+        this.room_explanation = room_explanation;
+    }
 
     public String getAsset_code() {
         return asset_code;

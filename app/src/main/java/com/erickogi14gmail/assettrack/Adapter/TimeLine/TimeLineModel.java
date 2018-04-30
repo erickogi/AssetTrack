@@ -26,6 +26,10 @@ public class TimeLineModel implements Parcelable {
     private String fix;
     private String comment;
     private String person;
+    private String labour_hours;
+    private String travel_hours;
+    private String engcomments;
+    private String custcomments;
 
 
 
@@ -48,8 +52,13 @@ public class TimeLineModel implements Parcelable {
         this.fix=in.readString();
         this.comment=in.readString();
         this.person=in.readString();
+        this.labour_hours = in.readString();
+        this.travel_hours = in.readString();
+        this.engcomments = in.readString();
+        this.custcomments = in.readString();
 
     }
+
 
     public String getIssue() {
         return issue;
@@ -107,6 +116,38 @@ public class TimeLineModel implements Parcelable {
         this.mStatus = mStatus;
     }
 
+    public String getLabour_hours() {
+        return labour_hours;
+    }
+
+    public void setLabour_hours(String labour_hours) {
+        this.labour_hours = labour_hours;
+    }
+
+    public String getTravel_hours() {
+        return travel_hours;
+    }
+
+    public void setTravel_hours(String travel_hours) {
+        this.travel_hours = travel_hours;
+    }
+
+    public String getEngcomments() {
+        return engcomments;
+    }
+
+    public void setEngcomments(String engcomments) {
+        this.engcomments = engcomments;
+    }
+
+    public String getCustcomments() {
+        return custcomments;
+    }
+
+    public void setCustcomments(String custcomments) {
+        this.custcomments = custcomments;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -122,5 +163,9 @@ public class TimeLineModel implements Parcelable {
         dest.writeString(this.comment);
         //dest.writeString(this.mDate);
         dest.writeInt(this.mStatus == null ? -1 : this.mStatus.ordinal());
+        dest.writeString(this.labour_hours);
+        dest.writeString(this.travel_hours);
+        dest.writeString(this.engcomments);
+        dest.writeString(this.custcomments);
     }
 }

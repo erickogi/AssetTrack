@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.erickogi14gmail.assettrack.Data.PrefManager;
 import com.erickogi14gmail.assettrack.R;
 import com.erickogi14gmail.assettrack.Views.MainActivity;
+import com.erickogi14gmail.assettrack.Views.V1.Admin.AdminMainActivity;
 
 public class Login extends AppCompatActivity {
 
@@ -19,12 +20,17 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
          prefManager=new PrefManager(Login.this);
         if(prefManager.isLoggedIn()){
-            startActivity(new Intent(Login.this, MainActivity.class));
-            finish();
+            if (prefManager.getUserType() == 1) {
+                startActivity(new Intent(Login.this, AdminMainActivity.class));
+                finish();
+            } else if (prefManager.getUserType() == 2) {
+                startActivity(new Intent(Login.this, MainActivity.class));
+                finish();
+            }
         }
         edtPassword=findViewById(R.id.input_password);
         edtID=findViewById(R.id.input_id);
@@ -42,9 +48,17 @@ public class Login extends AppCompatActivity {
             return;
         }
 
+        if (edtID.getText().toString().toLowerCase().equals("admin") && edtPassword.getText().toString().equals("zalego")) {
+            prefManager.setIsLoggedIn(true, 1);
+            startActivity(new Intent(Login.this, AdminMainActivity.class));
+            finish();
+        }
+        if (edtID.getText().toString().toLowerCase().equals("engineer") && edtPassword.getText().toString().equals("zalego")) {
+            prefManager.setIsLoggedIn(true, 2);
+            startActivity(new Intent(Login.this, MainActivity.class));
+            finish();
+        }
 
-        prefManager.setIsLoggedIn(true);
-        startActivity(new Intent(Login.this, MainActivity.class));
-        finish();
+
     }
 }

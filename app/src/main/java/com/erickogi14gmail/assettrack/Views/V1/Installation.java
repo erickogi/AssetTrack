@@ -1,10 +1,13 @@
 package com.erickogi14gmail.assettrack.Views.V1;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.erickogi14gmail.assettrack.Adapter.StepsAdapters.InstallationStepsAdapter;
+import com.erickogi14gmail.assettrack.Data.Sqlite.DbContentValues;
+import com.erickogi14gmail.assettrack.GLConstants;
 import com.erickogi14gmail.assettrack.R;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
@@ -31,9 +34,18 @@ public class Installation extends AppCompatActivity implements StepperLayout.Ste
     @Override
     public void onCompleted(View completeButton) {
 
-        finish();
+        if (new DbContentValues().insert(GLConstants.assetModel, Installation.this)) {
+            finish();
+        } else {
+            snack("Error Inserting asset");
+        }
+
     }
 
+    private void snack(String msg) {
+        Snackbar.make(mStepperLayout, msg, Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
+    }
     @Override
     public void onError(VerificationError verificationError) {
 

@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.erickogi14gmail.assettrack.Adapter.TimeLine.OrderStatus;
@@ -98,7 +97,17 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
             }
 
             @Override
-            public void onClickListener(int adapterPosition, ImageView imageView) {
+            public void onClickListener(int adapterPosition, View view) {
+
+            }
+
+            @Override
+            public void onCheckedClickListener(int position) {
+
+            }
+
+            @Override
+            public void onMoreClickListener(int position) {
 
             }
         });
@@ -124,6 +133,10 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
                   timeLineModel.setStatus(OrderStatus.COMPLETED);
                   timeLineModel.setDate(issues1.getDate());
                   timeLineModel.semMessage(issues1.getMessage());
+                    timeLineModel.setLabour_hours(issues1.getLabour_hour());
+                    timeLineModel.setTravel_hours(issues1.getTravel_hours());
+                    timeLineModel.setCustcomments(issues1.getCustomer_coments());
+                    timeLineModel.setEngcomments(issues1.getEngineers_comments());
 
 
                   timeLineModels.add(timeLineModel);
@@ -132,7 +145,7 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
         }
 
         return timeLineModels;
-    };
+    }
 
     private LinearLayoutManager getLinearLayoutManager() {
         if (mOrientation == Orientation.HORIZONTAL) {
@@ -235,19 +248,25 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
     private void startDialog(TimeLineModel timeLineModel) {
 
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
-        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_new_issue, null);
+        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_new_issue_report, null);
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getContext());
         alertDialogBuilderUserInput.setView(mView);
         alertDialogBuilderUserInput.setTitle("Issue Details");
         //alertDialogBuilderUserInput.setIcon(R.drawable.ic_add_black_24dp);
 
-        EditText edtIssue,edtIssueDesc,edtFix,edtComment;
+        TextView edtIssue, edtIssueDesc, edtFix, edtComment, edtTravel, edtLabour, edtEngRemarks, edtCustomerRemarks;
         TextView txtDate,txtBy;
 
         edtIssue=mView.findViewById(R.id.edt_issue_title);
         edtIssueDesc=mView.findViewById(R.id.edt_issue_desc);
         edtFix=mView.findViewById(R.id.edt_fix);
         edtComment=mView.findViewById(R.id.edt_comment);
+
+        edtEngRemarks = mView.findViewById(R.id.edt_engineer_remarks);
+        edtCustomerRemarks = mView.findViewById(R.id.edt_customer_remarks);
+
+        edtLabour = mView.findViewById(R.id.edt_labours_hours);
+        edtTravel = mView.findViewById(R.id.edt_travel_hours);
 
         txtBy=mView.findViewById(R.id.txt_by);
         txtDate=mView.findViewById(R.id.txt_date);
@@ -260,12 +279,38 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
         edtIssueDesc.setText(timeLineModel.getIssue());
 
 
-
-        edtComment.setEnabled(false);
-
-        edtIssueDesc.setEnabled(false);
-        edtFix.setEnabled(false);
-        edtIssue.setEnabled(false);
+        try {
+            edtLabour.setText(timeLineModel.getLabour_hours());
+            edtTravel.setText(timeLineModel.getTravel_hours());
+            edtCustomerRemarks.setText(timeLineModel.getCustcomments());
+            edtEngRemarks.setText(timeLineModel.getEngcomments());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
+        try {
+            //edtLabour.setText(timeLineModel.getLabour_hours());
+            edtTravel.setText(timeLineModel.getTravel_hours());
+            edtCustomerRemarks.setText(timeLineModel.getCustcomments());
+            edtEngRemarks.setText(timeLineModel.getEngcomments());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
+        try {
+            // edtLabour.setText(timeLineModel.getLabour_hours());
+            // edtTravel.setText(timeLineModel.getTravel_hours());
+            edtCustomerRemarks.setText(timeLineModel.getCustcomments());
+            edtEngRemarks.setText(timeLineModel.getEngcomments());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
+        try {
+            //edtLabour.setText(timeLineModel.getLabour_hours());
+            ///edtTravel.setText(timeLineModel.getTravel_hours());
+            // edtCustomerRemarks.setText(timeLineModel.getCustcomments());
+            edtEngRemarks.setText(timeLineModel.getEngcomments());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
 
 
 
@@ -319,23 +364,15 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
         // final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
         alertDialogBuilderUserInput
                 .setCancelable(false)
-                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogBox, int id) {
-                        // ToDo get user input here
+                .setPositiveButton("Save", (dialogBox, id) -> {
+                    // ToDo get user input here
 
-                        // dialogBox.dismiss();
+                    // dialogBox.dismiss();
 
-                    }
                 })
 
                 .setNegativeButton("Dismiss",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogBox, int id) {
-                                dialogBox.cancel();
-                            }
-                        });
+                        (dialogBox, id) -> dialogBox.cancel());
 
         AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
         alertDialogAndroid.show();
@@ -343,6 +380,92 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
         theButton.setOnClickListener(new CustomListener(alertDialogAndroid));
 
     }
+
+    private void update(Issues issues) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DbConstants.asset_id, issues.getAsset_id());
+        contentValues.put(DbConstants.comment, issues.getComment());
+        contentValues.put(DbConstants.date, issues.getDate());
+        contentValues.put(DbConstants.fix, issues.getFix());
+        contentValues.put(DbConstants.issue, issues.getIssue());
+        contentValues.put(DbConstants.message, issues.getMessage());
+        contentValues.put(DbConstants.person, issues.getPerson());
+        contentValues.put(DbConstants.parts_used, issues.getParts_used());
+        contentValues.put(DbConstants.parts_needed, issues.getParts_needed());
+        contentValues.put(DbConstants.engineersremarks, issues.getEngineers_comments());
+        contentValues.put(DbConstants.cusomerremarks, issues.getCustomer_coments());
+        contentValues.put(DbConstants.travelhours, issues.getTravel_hours());
+        contentValues.put(DbConstants.labourhours, issues.getLabour_hour());
+        // contentValues.put(DbConstants.parts_needed,issues.getParts_needed());
+        // contentValues.put(DbConstants.parts_needed,issues.getParts_needed());
+
+        DbOperations dbOperations = new DbOperations(getContext());
+
+        if (dbOperations.insert(DbConstants.TABLE_ISSUE, contentValues)) {
+
+            initData();
+        } else {
+            MyToast.toast("Issue not inserted", getContext(), R.drawable.ic_error_outline_black_24dp, Constants.TOAST_LONG);
+        }
+    }
+
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = (dayOfMonth + "/" + (++monthOfYear) + "/" + year);
+        // txtDate.setText(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, monthOfYear, dayOfMonth);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = format.format(calendar.getTime());
+
+        this.issues.setNext_service(strDate);
+        update(issues);
+    }
+
+    private Issues issues;
+
+    void showDatePicker(Issues issues) {
+
+        this.issues = issues;
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(FragmentAssetIssues.this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH));
+        dpd.setThemeDark(true);
+        dpd.setTitle("Next Service Date");
+        dpd.vibrate(true);
+        dpd.dismissOnPause(true);
+        dpd.showYearPickerFirst(true);
+        //dpd.setMaxDate(now);//Date(now);
+        dpd.setVersion(DatePickerDialog.Version.VERSION_2);
+
+        dpd.show(getActivity().getFragmentManager(), "DatePicker");
+
+
+    }
+
+    private void dial() {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.dialog_new_issue);
+        EditText edtIssue = dialog.findViewById(R.id.edt_issue_title);
+        TextView txtBy = dialog.findViewById(R.id.txt_by);
+
+        txtBy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (edtIssue.getText().toString().isEmpty()) {
+                    MyToast.toast("Fill issue", getContext(), R.drawable.ic_error_outline_black_24dp, Constants.TOAST_LONG);
+                } else {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+
+    }
+
     class CustomListener implements View.OnClickListener {
         private final Dialog dialog;
 
@@ -354,9 +477,12 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
 
         @Override
         public void onClick(View v) {
-            EditText edtIssue,edtIssueDesc,edtFix,edtComment,edtSpareUsed,edtSpareNeeded;
+            EditText edtIssue, edtIssueDesc, edtFix, edtComment, edtSpareUsed, edtSpareNeeded, edtTravelHours, edtLabourHours, edtCustomerComents, edtEngineersComents;
 
             TextView txtDate,txtBy;
+
+            edtLabourHours = dialog.findViewById(R.id.edt_labour_hours);
+            edtTravelHours = dialog.findViewById(R.id.edt_travel_hours);
 
             edtIssue=dialog.findViewById(R.id.edt_issue_title);
             edtIssueDesc=dialog.findViewById(R.id.edt_issue_desc);
@@ -364,6 +490,10 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
             edtComment=dialog.findViewById(R.id.edt_comment);
             edtSpareNeeded=dialog.findViewById(R.id.edt_spare_need);
             edtSpareUsed=dialog.findViewById(R.id.edt_spare_used);
+
+            edtCustomerComents = dialog.findViewById(R.id.edt_customer_remarks);
+            edtEngineersComents = dialog.findViewById(R.id.edt_engineer_remarks);
+
 
             txtBy=dialog.findViewById(R.id.txt_by);
             txtDate=dialog.findViewById(R.id.txt_date);
@@ -394,6 +524,22 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
                 edtSpareUsed.setError("Required");
                 return;
             }
+            if (edtCustomerComents.getText().toString().isEmpty()) {
+                edtCustomerComents.setError("Required");
+                return;
+            }
+            if (edtEngineersComents.getText().toString().isEmpty()) {
+                edtEngineersComents.setError("Required");
+                return;
+            }
+            if (edtLabourHours.getText().toString().isEmpty()) {
+                edtLabourHours.setError("Required");
+            }
+
+            if (edtTravelHours.getText().toString().isEmpty()) {
+                edtTravelHours.setError("Required");
+            }
+
 
             Issues issues=new Issues();
             issues.setAsset_id(Constants.id);
@@ -402,10 +548,22 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
             issues.setFix(edtFix.getText().toString());
             issues.setIssue(edtIssueDesc.getText().toString());
             issues.setMessage(edtIssue.getText().toString());
-            issues.setPerson("Eric Kogi");
+            issues.setPerson("Eric");
+
+
             issues.setParts_needed(edtSpareNeeded.getText().toString());
             issues.setParts_used(edtSpareUsed.getText().toString());
 
+            issues.setEngineers_comments(edtEngineersComents.getText().toString());
+            issues.setCustomer_coments(edtCustomerComents.getText().toString());
+
+            issues.setLabour_hour(edtLabourHours.getText().toString());
+            issues.setTravel_hours(edtTravelHours.getText().toString());
+
+
+            // IssueModel issueModel=new IssueModel();
+            // issueModel.setAsset_id(Constants.id);
+            // issueModel.set
 
             dialog.dismiss();
 
@@ -417,92 +575,5 @@ public class FragmentAssetIssues extends Fragment implements DatePickerDialog.On
         }
 
 
-    }
-
-
-
-
-
-
-
-
-    @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = (dayOfMonth + "/" + (++monthOfYear) + "/" + year);
-        // txtDate.setText(date);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, monthOfYear, dayOfMonth);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = format.format(calendar.getTime());
-
-        this.issues.setNext_service(strDate);
-        update(issues);
-    }
-
-    private  Issues issues;
-    void showDatePicker(Issues issues) {
-
-        this.issues=issues;
-        Calendar now = Calendar.getInstance();
-        DatePickerDialog dpd = DatePickerDialog.newInstance(FragmentAssetIssues.this,
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH));
-        dpd.setThemeDark(true);
-        dpd.setTitle("Next Service Date");
-        dpd.vibrate(true);
-        dpd.dismissOnPause(true);
-        dpd.showYearPickerFirst(true);
-        //dpd.setMaxDate(now);//Date(now);
-        dpd.setVersion(DatePickerDialog.Version.VERSION_2);
-
-        dpd.show(getActivity().getFragmentManager(), "DatePicker");
-
-
-    }
-
-    private void dial(){
-        Dialog dialog=new Dialog(getContext());
-        dialog.setContentView(R.layout.dialog_new_issue);
-      EditText   edtIssue=dialog.findViewById(R.id.edt_issue_title);
-     TextView   txtBy=dialog.findViewById(R.id.txt_by);
-
-     txtBy.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-             if(edtIssue.getText().toString().isEmpty()){
-                 MyToast.toast("Fill issue",getContext(),R.drawable.ic_error_outline_black_24dp,Constants.TOAST_LONG);
-             }else {
-                 dialog.dismiss();
-             }
-         }
-     });
-
-
-    }
-
-
-
-
-    private  void  update(Issues issues){
-        ContentValues contentValues=new ContentValues();
-        contentValues.put(DbConstants.asset_id,issues.getAsset_id());
-        contentValues.put(DbConstants.comment,issues.getComment());
-        contentValues.put(DbConstants.date,issues.getDate());
-        contentValues.put(DbConstants.fix,issues.getFix());
-        contentValues.put(DbConstants.issue,issues.getIssue());
-        contentValues.put(DbConstants.message,issues.getMessage());
-        contentValues.put(DbConstants.person,issues.getPerson());
-        contentValues.put(DbConstants.parts_used,issues.getParts_used());
-        contentValues.put(DbConstants.parts_needed,issues.getParts_needed());
-
-        DbOperations dbOperations=new DbOperations(getContext());
-
-        if(dbOperations.insert(DbConstants.TABLE_ISSUE,contentValues)){
-
-            initData();
-        }else {
-            MyToast.toast("Issue not inserted",getContext(),R.drawable.ic_error_outline_black_24dp,Constants.TOAST_LONG);
-        }
     }
 }

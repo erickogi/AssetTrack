@@ -6,11 +6,21 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 public class CustomerModel implements Parcelable,Serializable {
+    private int KEYID;
     private String id;
     private String name;
+    private String email;
     private String address;
     private String telephone;
     private String physical_address;
+
+    public int getKEYID() {
+        return KEYID;
+    }
+
+    public void setKEYID(int KEYID) {
+        this.KEYID = KEYID;
+    }
 
     public String getId() {
         return id;

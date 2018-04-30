@@ -6,15 +6,15 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,19 +22,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScanner;
 import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScannerBuilder;
 import com.erickogi14gmail.assettrack.Adapter.TimeLine.OrderStatus;
 import com.erickogi14gmail.assettrack.Adapter.TimeLine.TimeLineModel;
 import com.erickogi14gmail.assettrack.Data.Models.Assets;
-import com.erickogi14gmail.assettrack.Data.Models.Issues;
+import com.erickogi14gmail.assettrack.Data.Models.V1.AssetModel;
+import com.erickogi14gmail.assettrack.Data.PrefManager;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbConstants;
+import com.erickogi14gmail.assettrack.Data.Sqlite.DbContentValues;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbOperations;
 import com.erickogi14gmail.assettrack.R;
 import com.erickogi14gmail.assettrack.Utills.Constants;
 import com.erickogi14gmail.assettrack.Utills.MyToast;
+import com.erickogi14gmail.assettrack.Views.Login.Login;
 import com.erickogi14gmail.assettrack.Views.V1.Installation;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
@@ -47,6 +52,7 @@ import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,91 +63,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView img_fab;
     private DbOperations dbOperations;
     int i;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        dbOperations=new DbOperations(MainActivity.this);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        if(dbOperations.getCount(DbConstants.TABLE_ITEMS)<1){
-            if(enterTestData()){
-             int asset_id=   dbOperations.getID(DbConstants.TABLE_ITEMS,DbConstants.image,"R");
-                Log.d("asset id",String.valueOf(asset_id));
-             Constants.id=String.valueOf(asset_id);
-                List<TimeLineModel> timeLineModels=getTimeline();
-
-                for(TimeLineModel timeLineModel:timeLineModels){
-                    Issues issues=new Issues();
-                    issues.setPerson(timeLineModel.getPerson());
-                    issues.setMessage(timeLineModel.getMessage());
-                    issues.setIssue(timeLineModel.getIssue());
-                    issues.setFix(timeLineModel.getFix());
-                    issues.setDate(timeLineModel.getDate());
-                    issues.setComment(timeLineModel.getComment());
-                    issues.setAsset_id(String.valueOf(asset_id));
-
-
-                    ContentValues contentValues=new ContentValues();
-                    contentValues.put(DbConstants.person,issues.getPerson());
-                    contentValues.put(DbConstants.message,issues.getMessage());
-                    contentValues.put(DbConstants.issue,issues.getIssue());
-                    contentValues.put(DbConstants.fix,issues.getIssue());
-                    contentValues.put(DbConstants.date,issues.getIssue());
-                    contentValues.put(DbConstants.comment,issues.getComment());
-                    contentValues.put(DbConstants.asset_id,issues.getAsset_id());
-
-
-                    dbOperations.insert(DbConstants.TABLE_ISSUE,contentValues);
-                }
-
-            }else {
-                Log.d("asset","not  saved");
-
-            }
-        }
-
-
-
-        img_fab=findViewById(R.id.img_btn);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT); // or ResideMenu.DIRECTION_RIGHT
-            }
-        });
-      //  fab.setVisibility(View.GONE);
+    void setResideMenu() {
         resideMenu = new ResideMenu(this);
         resideMenu.setBackground(R.drawable.background_bf);
         resideMenu.attachToActivity(this);
 
-        // create menu items;
-        String titles[] = { "Home", "Add Assets","Profile", "History", "Log Out" };
-        int icon[] = { R.drawable.ic_home_black_24dp,R.drawable.ic_add_black_24dp, R.drawable.ic_account_circle_black_24dp, R.drawable.ic_history_black_24dp, R.drawable.ic_exit_to_app_black_24dp};
-
-//
-//        for (i=0; i < titles.length; i++){
-//            ResideMenuItem item = new ResideMenuItem(this, icon[i], titles[i]);
-//           item.setOnClickListener(v -> {
-//               if(i==0){
-//                   MyToast.toast("Home Clicked",MainActivity.this,R.drawable.ic_home_black_24dp, Constants.TOAST_LONG);
-//               }else if(i==1){
-//                   MyToast.toast("Account Clicked",MainActivity.this,R.drawable.ic_account_circle_black_24dp, Constants.TOAST_LONG);
-//
-//               }else if(i==1){
-//                   MyToast.toast("Home Clicked",MainActivity.this,R.drawable.ic_history_black_24dp, Constants.TOAST_LONG);
-//
-//               }else if(i==1){
-//                   MyToast.toast("Log Out Clicked",MainActivity.this,R.drawable.ic_exit_to_app_black_24dp, Constants.TOAST_LONG);
-//
-//               }
-//           });
-//            resideMenu.addMenuItem(item,  ResideMenu.DIRECTION_LEFT); // or  ResideMenu.DIRECTION_RIGHT
-//        }
 
 
         ResideMenuItem resideMenuItem=new ResideMenuItem(this,R.drawable.ic_home_black_24dp,"Home ");
@@ -151,52 +78,60 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ResideMenuItem resideMenuItem3=new ResideMenuItem(this,R.drawable.ic_exit_to_app_black_24dp,"Log Out");
 
         resideMenu.addMenuItem(resideMenuItem, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(resideMenuItem0, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(resideMenuItem1, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(resideMenuItem2, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(resideMenuItem3, ResideMenu.DIRECTION_LEFT);
 
         resideMenuItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // MyToast.toast("Home Clicked",MainActivity.this,R.drawable.ic_home_black_24dp, Constants.TOAST_LONG);
+                // MyToast.toast("Home Clicked",MainActivity.this,R.drawable.ic_home_black_24dp, Constants.TOAST_LONG);
                 dial();
+                resideMenu.closeMenu();
             }
         });
         resideMenuItem0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // MyToast.toast("Home Clicked",MainActivity.this,R.drawable.ic_home_black_24dp, Constants.TOAST_LONG);
-
+                resideMenu.closeMenu();
                 startActivity(new Intent(MainActivity.this,CreateAsset.class));
             }
         });
         resideMenuItem1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // MyToast.toast("Account Clicked",MainActivity.this,R.drawable.ic_account_circle_black_24dp, Constants.TOAST_LONG);
+                resideMenu.closeMenu();
+                // MyToast.toast("Account Clicked",MainActivity.this,R.drawable.ic_account_circle_black_24dp, Constants.TOAST_LONG);
 
             }
         });
         resideMenuItem2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  MyToast.toast("History Clicked",MainActivity.this,R.drawable.ic_history_black_24dp, Constants.TOAST_LONG);
+                resideMenu.closeMenu();
+                //  MyToast.toast("History Clicked",MainActivity.this,R.drawable.ic_history_black_24dp, Constants.TOAST_LONG);
 
             }
         });
         resideMenuItem3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resideMenu.closeMenu();
+                PrefManager prefManager = new PrefManager(MainActivity.this);
+                prefManager.setIsLoggedIn(false, 2);
+                startActivity(new Intent(MainActivity.this, Login.class));
+                finish();
 
-               // MyToast.toast("Log Out Clicked",MainActivity.this,R.drawable.ic_exit_to_app_black_24dp, Constants.TOAST_LONG);
+
+                // MyToast.toast("Log Out Clicked",MainActivity.this,R.drawable.ic_exit_to_app_black_24dp, Constants.TOAST_LONG);
             }
         });
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 
 
+    }
 
-        bmb=findViewById(R.id.bmb);
+    void setBmb() {
+        // bmb=findViewById(R.id.bmb);
         bmb.setNormalColor(R.color.colorAccent);
         bmb.setRippleEffect(true);
 
@@ -231,30 +166,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         //for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
-            HamButton.Builder builder = new HamButton.Builder()
+        HamButton.Builder builder = new HamButton.Builder()
 
-                    .listener(new OnBMClickListener() {
-                        @Override
-                        public void onBoomButtonClick(int index) {
-                            if(checkPerrmission()) {
-                                startScan();
-                            }else {
-                                requestPermissions();
-                            }
-
-
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        if (checkPerrmission()) {
+                            startScan();
+                        } else {
+                            requestPermissions();
                         }
-                    })
-                   // .button().setClickable(true)
-                    .normalImageRes(R.drawable.code_bar)
-                    .normalText("Scan Bar code")
-                    .containsSubText(true)
-                    .rippleEffect(true)
-                    .rotateImage(true)
 
-                    .subNormalText("Find asset by scanning a bar code")
-                   ;
-            bmb.addBuilder(builder);
+
+                    }
+                })
+                // .button().setClickable(true)
+                .normalImageRes(R.drawable.code_bar)
+                .normalText("Scan Bar code")
+                .containsSubText(true)
+                .rippleEffect(true)
+                .rotateImage(true)
+
+                .subNormalText("Find asset by scanning a bar code");
+        bmb.addBuilder(builder);
 
 
 
@@ -299,24 +233,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 ;
         bmb.addBuilder(builder2);
-        bmb.setAutoBoomImmediately(true);
+        bmb.setAutoBoomImmediately(false);
 
         bmb.setOnBoomListener(new OnBoomListener() {
             @Override
             public void onClicked(int index, BoomButton boomButton) {
-               // startScan();
+                // startScan();
             }
 
             @Override
             public void onBackgroundClick() {
 
-               // img_fab.setRotation(45);
+                // img_fab.setRotation(45);
                 bmb.setAutoBoomImmediately(true);
             }
 
             @Override
             public void onBoomWillHide() {
-               // img_fab.setRotation(45);
+                // img_fab.setRotation(45);
                 bmb.setAutoHide(true);
             }
 
@@ -327,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onBoomWillShow() {
-               // img_fab.setRotation(45);
+                // img_fab.setRotation(45);
             }
 
             @Override
@@ -336,6 +270,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         //}
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dbOperations = new DbOperations(MainActivity.this);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        //img_fab=findViewById(R.id.img_btn);
+
+
+        setResideMenu();
+
     }
 
     private void startList() {
@@ -374,11 +324,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         contentValues.put(DbConstants.condition,assets.getCondition());
         //contentValues.put(DbConstants.per);
 
-        if(dbOperations.insert(DbConstants.TABLE_ITEMS,contentValues)){
-            return true;
-        }else {
-            return false;
-        }
+        return dbOperations.insert(DbConstants.TABLE_ITEMS, contentValues);
 
     }
 
@@ -428,29 +374,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onResult(Barcode barcode) {
 
-                        int id=dbOperations.getID(DbConstants.TABLE_ITEMS,DbConstants.tag,barcode.rawValue);
+                        int id = dbOperations.getID(DbConstants.TABLE_ITEMS_V1, DbConstants.ASSET_CODE, barcode.rawValue);
                         if(id!=9999){
                             Constants.id=String.valueOf(id);
 
-                            Log.d("constantidd",Constants.id);
-                            Intent intent =new Intent(MainActivity.this,AssetActivity.class);
-                            intent.putExtra("key_id",String.valueOf(id));
-                            startActivity(intent);
-
-                        }else {
-                            Log.d("constantidd",Constants.id);
-                            int asset_id = dbOperations.getID(DbConstants.TABLE_ITEMS, DbConstants.image, "R");
-                            Log.d("assetid", String.valueOf(asset_id));
-                            Constants.id = String.valueOf(asset_id);
+//                            Log.d("constantidd",Constants.id);
+//                            Intent intent =new Intent(MainActivity.this,AssetActivity.class);
+//                            intent.putExtra("key_id",String.valueOf(id));
+//                            startActivity(intent);
 
 
-                            // startActivity(new Intent(MainActivity.this,AssetActivity.class));
+                            Cursor c = dbOperations.select(DbConstants.TABLE_ITEMS_V1, DbConstants.KEY_ID, id);
+                            ArrayList<AssetModel> assetModels = new ArrayList<>();
+                            if (c != null) {
 
-                            //Constants.id=String.valueOf(id);
-                            Intent intent = new Intent(MainActivity.this, AssetActivity.class);
-                            intent.putExtra("key_id", String.valueOf(id));
-                            startActivity(intent);
+                                assetModels = new DbContentValues().getAssetsv1(c);
+                            }
+                            if (assetModels != null && assetModels.size() > 0) {
+                                Constants.assetModel = assetModels.get(0);
+                                Intent intent = new Intent(MainActivity.this, AssetActivity.class);
+                                intent.putExtra("key_id", String.valueOf(id));
+
+                                startActivity(intent);
+                            }
+
+                        } else {
+//                            Log.d("constantidd",Constants.id);
+//                            int asset_id = dbOperations.getID(DbConstants.TABLE_ITEMS, DbConstants.image, "R");
+//                            Log.d("assetid", String.valueOf(asset_id));
+//                            Constants.id = String.valueOf(asset_id);
+//
+//
+//                            // startActivity(new Intent(MainActivity.this,AssetActivity.class));
+//
+//                            //Constants.id=String.valueOf(id);
+//                            Intent intent = new Intent(MainActivity.this, AssetActivity.class);
+//                            intent.putExtra("key_id", String.valueOf(id));
+///                            startActivity(intent);
+
+                            MyToast.toast("Asset not found ", MainActivity.this, R.drawable.ic_error_outline_black_24dp, Toast.LENGTH_LONG);
+                            snack("Asset not found");
+
                         }
+
                        // Toast.makeText(MainActivity.this, String.valueOf(barcode.rawValue), Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -461,6 +427,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
+    }
+
+    private void snack(String msg) {
+        ScrollView scrollView = findViewById(R.id.scroll);
+        Snackbar.make(scrollView, msg, Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
     }
     private List<TimeLineModel> getTimeline(){
         List<TimeLineModel> timeLineModels=new LinkedList<>();
@@ -557,7 +529,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        bmb.setAutoBoomImmediately(true);
+        //bmb.setAutoBoomImmediately(true);
     }
 
     private void startDialog() {
@@ -598,6 +570,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         theButton.setOnClickListener(new CustomListener(alertDialogAndroid));
 
     }
+
+    public void scan(View view) {
+        if (checkPerrmission()) {
+            startScan();
+        } else {
+            requestPermissions();
+        }
+    }
+
+    public void entercode(View view) {
+        searchByCode();
+    }
+
+    public void assetList(View view) {
+        startList();
+    }
+
+    public void addNewAssetr(View view) {
+    }
+
+    public void addNewAsset(View view) {
+        startActivity(new Intent(MainActivity.this, Installation.class));
+//
+    }
+
+    public void assignments(View view) {
+
+    }
+
     class CustomListener implements View.OnClickListener {
         private final Dialog dialog;
 
@@ -623,12 +624,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             DbOperations dbOperations=new DbOperations(MainActivity.this);
 
 
-            int id=dbOperations.getID(DbConstants.TABLE_ITEMS,DbConstants.tag,edtCode.getText().toString());
+            int id = dbOperations.getID(DbConstants.TABLE_ITEMS_V1, DbConstants.ASSET_CODE, edtCode.getText().toString());
             if(id!=9999){
                 Constants.id=String.valueOf(id);
-                Intent intent =new Intent(MainActivity.this,AssetActivity.class);
-                intent.putExtra("key_id",String.valueOf(id));
-                startActivity(intent);
+
+                Cursor c = dbOperations.select(DbConstants.TABLE_ITEMS_V1, DbConstants.KEY_ID, id);
+                ArrayList<AssetModel> assetModels = new ArrayList<>();
+                if (c != null) {
+
+                    assetModels = new DbContentValues().getAssetsv1(c);
+                }
+                if (assetModels != null && assetModels.size() > 0) {
+                    Constants.assetModel = assetModels.get(0);
+                    Intent intent = new Intent(MainActivity.this, AssetActivity.class);
+                    intent.putExtra("key_id", String.valueOf(id));
+
+                    startActivity(intent);
+                }
 
             }else {
                 MyToast.toast("Could not find item",MainActivity.this,R.drawable.ic_error_outline_black_24dp,Constants.TOAST_LONG);

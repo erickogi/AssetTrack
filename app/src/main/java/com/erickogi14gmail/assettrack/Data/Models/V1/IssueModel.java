@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class IssueModel implements Parcelable {
+    private int KEYID;
     private String asset_id;
     private String asset_code;
 
@@ -45,6 +46,14 @@ public class IssueModel implements Parcelable {
         this.work_ticket = in.readString();
         this.partsModels = new ArrayList<PartsModel>();
         in.readList(this.partsModels, PartsModel.class.getClassLoader());
+    }
+
+    public int getKEYID() {
+        return KEYID;
+    }
+
+    public void setKEYID(int KEYID) {
+        this.KEYID = KEYID;
     }
 
     public ArrayList<PartsModel> getPartsModels() {

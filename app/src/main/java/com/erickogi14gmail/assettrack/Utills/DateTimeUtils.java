@@ -14,6 +14,15 @@ import java.util.Locale;
  * Created by HP-HP on 19-07-2016.
  */
 public class DateTimeUtils {
+    public static String getNowslong() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+
+        //Date d = .parse(string_date);
+        long milliseconds = date.getTime();
+        //return dateFormat.format(date);
+        return String.valueOf(milliseconds);
+    }
 
     public static String parseDateTime(String dateString, String originalFormat, String outputFromat) {
 

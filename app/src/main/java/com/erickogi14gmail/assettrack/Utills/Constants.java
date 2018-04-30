@@ -3,6 +3,8 @@ package com.erickogi14gmail.assettrack.Utills;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.erickogi14gmail.assettrack.Data.Models.V1.AssetModel;
+
 /**
  * Created by Eric on 1/5/2018.
  */
@@ -20,6 +22,7 @@ public class Constants {
     public  static  String id="0";
 
 
+    public static AssetModel assetModel;
     private static final float BITMAP_SCALE = 0.4f;
     private static final int BLUR_RADIUS = 8;
     public static int TOAST_LONG = 1;

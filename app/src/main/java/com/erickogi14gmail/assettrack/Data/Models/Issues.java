@@ -20,6 +20,45 @@ public class Issues implements Serializable{
     private String parts_needed;
     private String next_service;
 
+    private String customer_coments;
+    private String engineers_comments;
+
+    private String travel_hours;
+    private String labour_hour;
+
+
+    public String getCustomer_coments() {
+        return customer_coments;
+    }
+
+    public void setCustomer_coments(String customer_coments) {
+        this.customer_coments = customer_coments;
+    }
+
+    public String getEngineers_comments() {
+        return engineers_comments;
+    }
+
+    public void setEngineers_comments(String engineers_comments) {
+        this.engineers_comments = engineers_comments;
+    }
+
+    public String getTravel_hours() {
+        return travel_hours;
+    }
+
+    public void setTravel_hours(String travel_hours) {
+        this.travel_hours = travel_hours;
+    }
+
+    public String getLabour_hour() {
+        return labour_hour;
+    }
+
+    public void setLabour_hour(String labour_hour) {
+        this.labour_hour = labour_hour;
+    }
+
     public String getParts_used() {
         return parts_used != null ? parts_used : "";
 

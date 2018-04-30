@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,9 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.erickogi14gmail.assettrack.Data.Models.V1.AccessoriesModel;
+import com.erickogi14gmail.assettrack.Data.Models.V1.AssetModel;
+import com.erickogi14gmail.assettrack.GLConstants;
 import com.erickogi14gmail.assettrack.R;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
@@ -36,11 +40,11 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
     private TextInputEditText edtContactPerson, edtContactPersonPosition, edtDepartment, edtRoomSizeMet;
     private RadioGroup rgRoomSpecification;
     private RadioButton rbYes, rbNo;
-    private Button btnAddTrrainees;
+    private Button btnAdAccessories;
     private ListView recyclerView;
 
-    private ArrayList<String> traineesList = new ArrayList<>();
-    private String[] trainees;
+    private ArrayList<String> accessoriesList = new ArrayList<>();
+    private String[] accessories;
 
 
     @Nullable
@@ -64,34 +68,80 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
         rgRoomSpecification = view.findViewById(R.id.rgrp_specifications);
         rbYes = view.findViewById(R.id.rbtn_yes);
         rbNo = view.findViewById(R.id.rbtn_no);
-        btnAddTrrainees = view.findViewById(R.id.btn_add);
+        btnAdAccessories = view.findViewById(R.id.btn_add);
         recyclerView = view.findViewById(R.id.recyclerView);
 
 
         initActions();
-        if (traineesList != null) {
-            intData();
+        initUIData();
+        if (GLConstants.assetModel != null && GLConstants.assetModel.getAccessoriesModels() != null) {
+            intData(GLConstants.assetModel.getAccessoriesModels());
         }
 
     }
 
-    void intData() {
+    private void initUIData() {
 
+        if (GLConstants.assetModel != null) {
+            AssetModel assetModel = GLConstants.assetModel;
+            if (GLConstants.assetModel.getContanct_person() != null) {
+                //customerID=assetModel.getCustomer_id();
+                edtContactPerson.setText(assetModel.getContanct_person());
 
-        trainees = new String[traineesList.size()];
-        for (int a = 0; a < traineesList.size(); a++) {
+            }
+            if (assetModel.getContact_person_position() != null) {
+                edtContactPersonPosition.setText(assetModel.getContact_person_position());
+            }
+            if (assetModel.getRoom_meets_specification() != null && assetModel.getRoom_meets_specification().equals("Yes")) {
+                rbYes.setChecked(true);
+                // edtWarrantyDuration.setVisibility(View.VISIBLE);
+                // edtWarrantyDuration.setText(assetModel.getWarranty_duration());
+                rbNo.setChecked(false);
+            } else if (assetModel.getWarranty() != null && assetModel.getWarranty().equals("No")) {
+                rbNo.setChecked(true);
+                //edtWarrantyDuration.setVisibility(View.GONE);
+                rbYes.setChecked(false);
+            }
+            if (assetModel.getDepartment() != null) {
+                edtDepartment.setText(assetModel.getDepartment());
+            }
+            if (assetModel.getRoomsizestatus() != null) {
+                edtRoomSizeMet.setText(assetModel.getRoomsizestatus());
+            }
+            if (assetModel.getAccessoriesModels() != null && assetModel.getAccessoriesModels().size() > 0) {
+                // edtModel.setText(assetModel.getModel());
+                intData(assetModel.getAccessoriesModels());
+            }
 
-            trainees[a] = traineesList.get(a);
+        } else {
+
+            snack("null");
         }
 
-        // if(trainees!=null&&trainees.length>0) {
-        ArrayAdapter adapter = new ArrayAdapter(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, trainees);
+    }
+
+    private void snack(String msg) {
+        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
+    }
+
+    void intData(ArrayList<AccessoriesModel> accessoriesModel) {
+
+
+        accessories = new String[accessoriesModel.size()];
+        for (int a = 0; a < accessoriesModel.size(); a++) {
+
+            accessories[a] = accessoriesModel.get(a).getName();
+        }
+
+        if (accessories != null && accessories.length > 0) {
+            ArrayAdapter adapter = new ArrayAdapter(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, accessories);
         recyclerView.setAdapter(adapter);
-        // }
+        }
     }
 
     void initActions() {
-        btnAddTrrainees.setOnClickListener(view -> addTrainee());
+        btnAdAccessories.setOnClickListener(view -> addTrainee());
         recyclerView.setOnItemLongClickListener((adapterView, view, i, l) -> {
 
 
@@ -99,7 +149,7 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
                     .setStyle(CustomAlertDialogue.Style.DIALOGUE)
                     .setCancelable(false)
                     .setTitle("Delete Items")
-                    .setMessage("Delete " + traineesList.get(i) + " From this list ")
+                    .setMessage("Delete " + accessoriesList.get(i) + " From this list ")
                     .setPositiveText("Confirm")
                     .setPositiveColor(R.color.negative)
                     .setPositiveTypeface(Typeface.DEFAULT_BOLD)
@@ -107,10 +157,23 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
                         @Override
                         public void OnClick(View view, Dialog dialog) {
 
-                            if (traineesList.size() > 0) {
-                                traineesList.remove(i);
+                            if (accessoriesList.size() > 0) {
+                                accessoriesList.remove(i);
                             }
-                            intData();
+                            ArrayList<AccessoriesModel> accessoriesModels = new ArrayList<>();
+
+                            try {
+                                for (String a : accessoriesList) {
+                                    AccessoriesModel accessoriesModel = new AccessoriesModel();
+                                    accessoriesModel.setName(a);
+                                    accessoriesModel.setId(a);
+                                }
+                                GLConstants.assetModel.setAccessoriesModels(accessoriesModels);
+
+                            } catch (Exception nm) {
+                                nm.printStackTrace();
+                            }
+                            intData(accessoriesModels);
                             dialog.dismiss();
 
                         }
@@ -127,8 +190,8 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
 //            builder.setTitle("Delete this item");
 //            builder.setPositiveButton(android.R.string.yes, (dialog, id) -> {
 //                //TODO
-//                if(traineesList.size()>0) {
-//                    traineesList.remove(i);
+//                if(accessoriesList.size()>0) {
+//                    accessoriesList.remove(i);
 //                }
 //                intData();
 //                dialog.dismiss();
@@ -162,8 +225,8 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
 //            public void onClick(DialogInterface dialog, int which) {
 //                if(!TextUtils.isEmpty(input.getText())){
 //
-//                    if(traineesList!=null){
-//                        traineesList.add(input.getText().toString());
+//                    if(accessoriesList!=null){
+//                        accessoriesList.add(input.getText().toString());
 //                        intData();
 //                    }
 //                }
@@ -188,7 +251,7 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
 
 
         ArrayList<String> boxHint = new ArrayList<>();
-        boxHint.add("Position");
+        boxHint.add("Qty");
 
 //        ArrayList<String> boxText = new ArrayList<>();
 //        boxText.add("BoxText");
@@ -196,8 +259,8 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
 
         CustomAlertDialogue.Builder alert = new CustomAlertDialogue.Builder(getActivity())
                 .setStyle(CustomAlertDialogue.Style.INPUT)
-                .setTitle("Trainees")
-                .setMessage("Add a trainee & the position ie ( Mr Juma , Head of IT)")
+                .setTitle("Accessories")
+                .setMessage("Accessories( Include any spare parts and startup kits that came with equipment) ")
                 .setPositiveText("Submit")
                 .setPositiveColor(R.color.positive)
                 .setPositiveTypeface(Typeface.DEFAULT_BOLD)
@@ -205,15 +268,28 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
                     if (inputList != null && inputList.size() > 0) {
                         if (!TextUtils.isEmpty(inputList.get(0))) {
 //
-                            if (traineesList != null) {
+                            if (accessoriesList != null) {
                                 String name = inputList.get(0);
                                 String pos = "";
 
                                 if (inputList.size() > 1) {
                                     pos = inputList.get(1);
                                 }
-                                traineesList.add(name + "  " + pos);
-                                intData();
+                                ArrayList<AccessoriesModel> accessoriesModels = new ArrayList<>();
+
+                                try {
+                                    for (String a : accessoriesList) {
+                                        AccessoriesModel accessoriesModel = new AccessoriesModel();
+                                        accessoriesModel.setName(a);
+                                        accessoriesModel.setId(a);
+                                    }
+                                    GLConstants.assetModel.setAccessoriesModels(accessoriesModels);
+
+                                } catch (Exception nm) {
+                                    nm.printStackTrace();
+                                }
+                                accessoriesList.add(name + "  " + pos);
+                                intData(accessoriesModels);
                             }
                         }
                     }
@@ -233,6 +309,24 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
 
     @Override
     public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
+        if (GLConstants.assetModel == null) {
+            GLConstants.assetModel = new AssetModel();
+
+            GLConstants.assetModel.setContanct_person(edtContactPerson.getText().toString());
+            GLConstants.assetModel.setCustomer_name(edtContactPersonPosition.getText().toString());
+            GLConstants.assetModel.setRoom_meets_specification(getRadioChecked(rgRoomSpecification));
+            GLConstants.assetModel.setDepartment(edtDepartment.getText().toString());
+            GLConstants.assetModel.setRoomsizestatus(edtRoomSizeMet.getText().toString());
+
+
+        } else {
+            GLConstants.assetModel.setContanct_person(edtContactPerson.getText().toString());
+            GLConstants.assetModel.setCustomer_name(edtContactPersonPosition.getText().toString());
+            GLConstants.assetModel.setRoom_meets_specification(getRadioChecked(rgRoomSpecification));
+            GLConstants.assetModel.setDepartment(edtDepartment.getText().toString());
+            GLConstants.assetModel.setRoomsizestatus(edtRoomSizeMet.getText().toString());
+
+        }
         callback.goToNextStep();
 
     }
@@ -259,9 +353,12 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        Log.d("Next", "Verify started");
         if (verify()) {
+            Log.d("Next", "Verify Passed");
             return null;
         } else {
+            Log.d("Next", "Verify Failed");
             return new VerificationError("Fill all fields");
         }
     }
@@ -274,10 +371,11 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
 
     @Override
     public void onError(@NonNull VerificationError error) {
-
+        Log.d("Next", "On Error");
     }
 
     private boolean verify() {
+        Log.d("Next", "Verify start");
         return isTextInputEditTextFilled(edtContactPerson)
                 && isTextInputEditTextFilled(edtContactPersonPosition)
                 && isTextInputEditTextFilled(edtDepartment)
@@ -295,6 +393,14 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
         return true;
     }
 
+    private String getRadioChecked(RadioGroup r) {
+        if (r.getCheckedRadioButtonId() == R.id.rbtn_yes) {
+            return "Yes";
+        } else {
+            return "No";
+        }
+    }
+
     private boolean isRadioGroupChecked(RadioGroup r) {
         if (r.getCheckedRadioButtonId() == -1) {
 
@@ -302,7 +408,8 @@ public class InstallationStepTwo extends Fragment implements BlockingStep {
                     .setAction("Action", null).show();
             return false;
         } else {
-            return rgRoomSpecification.getCheckedRadioButtonId() == R.id.rbtn_warranty_yes || rgRoomSpecification.getCheckedRadioButtonId() == R.id.rbtn_warranty_yes;
+            return rgRoomSpecification.getCheckedRadioButtonId() == R.id.rbtn_yes
+                    || rgRoomSpecification.getCheckedRadioButtonId() == R.id.rbtn_no;
         }
     }
 }

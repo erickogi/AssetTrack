@@ -7,6 +7,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.rohitss.uceh.UCEHandler;
 
 /**
  * Created by Eric on 10/8/2017.
@@ -27,6 +28,10 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        //AndroidNetworking.initialize(getApplicationContext());
+        //AndroidNetworking.enableLogging();
+        new UCEHandler.Builder(this).setTrackActivitiesEnabled(true).addCommaSeparatedEmailAddresses("kogi@zalego.com,erickogi14@gmail.com").build();
+
     }
 
     public RequestQueue getRequestQueue() {

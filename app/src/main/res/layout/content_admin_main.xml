@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Views.V1.Admin.AdminMainActivity"
+    tools:showIn="@layout/activity_admin_main">
+
+    <LinearLayout
+        android:id="@+id/layout1"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <RelativeLayout
+
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/profile"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/ic_person_black_24dp"
+                    android:padding="10dp" />
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_toRightOf="@+id/profile"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Logged In As : Eric( ADMINISTRATOR) "
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="3dp"
+                        android:background="@color/lightgray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="eric@zalego.co.ke"
+                        android:textColor="@android:color/darker_gray" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+    <ScrollView
+
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout1"
+        android:scrollbars="vertical">
+
+        <!--android:background="#fcfcfc"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_marginBottom="20dp"
+
+            android:background="@drawable/corner_border_transaparent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/bankcardId"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="manageAssets">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:padding="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/fixed_asset" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="MANAGE ASSETS"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/lightgray" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="manageClients">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/cerclebackgroundpink"
+                            android:padding="10dp"
+                            android:src="@drawable/clients" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="MANAGE CLIENTS"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/lightgray" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="manageEngineers">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/cerclebackgroundgreen"
+                            android:padding="10dp"
+                            android:src="@drawable/engineer" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="MANAGE ENGINEERS"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/lightgray" />
+
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="manageStatus">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/cerclebackgroundyello"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_format_list_bulleted_black_24dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="MANAGE STATUSES"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+
+                            android:background="@color/lightgray" />
+
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="20dp"
+
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corner_border_transaparent"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Summary"
+                        android:textStyle="bold" />
+
+                    <View
+
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+
+                        android:background="@color/lightgray" />
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="3dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:text="(Currently being maintained)" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="16" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="3dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:text="Working Assets" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="70" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="3dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:text="Faulty Asset " />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="10" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="3dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:text="Decommissioned Assets" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="4" />
+
+
+                    </LinearLayout>
+
+                    <View
+
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+
+                        android:background="@color/lightgray" />
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="3dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:text="Total Asset Count"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="100"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".NetworkUtills.volley.MyApplication"
@@ -51,6 +50,26 @@
         <activity
             android:name=".Views.V1.Service"
             android:label="@string/title_activity_service"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.V1.Admin.AdminMainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.V1.Admin.ActivityManageStatus"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.V1.Admin.ActivityManageAssets"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.V1.Admin.ActivityManageEngineers"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.V1.Admin.ActivityManageClients"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

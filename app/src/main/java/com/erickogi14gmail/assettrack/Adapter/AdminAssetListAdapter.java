@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.erickogi14gmail.assettrack.Data.Models.V1.AssetModel;
+import com.erickogi14gmail.assettrack.GLConstants;
 import com.erickogi14gmail.assettrack.R;
 import com.erickogi14gmail.assettrack.Utills.UtilListeners.OnclickRecyclerListener;
 import com.haozhang.lib.SlantedTextView;
@@ -53,17 +54,20 @@ public class AdminAssetListAdapter extends RecyclerView.Adapter<AdminAssetListAd
         holder.mName.setText(assetModel.getAsset_name());
 
 
-        if (status == 1) {
-            if (assetModel.getAsset_status().equals("Okay")) {
+        if (status == 0) {
+            if (assetModel.getAsset_status_id().equals("" + GLConstants.WORKING)) {
                 holder.slantedTextView.setTextColor(context.getResources().getColor(R.color.green));
-            } else {
+            } else if (assetModel.getAsset_status_id().equals("" + GLConstants.FAULTY)) {
                 holder.slantedTextView.setTextColor(context.getResources().getColor(R.color.red));
+            } else if (assetModel.getAsset_status_id().equals("" + GLConstants.WRITTEN_OFF)) {
+                holder.slantedTextView.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             }
+            holder.slantedTextView.setText(assetModel.getAsset_status());
         } else {
 
             holder.slantedTextView.setVisibility(View.GONE);
         }
-        holder.slantedTextView.setText(assetModel.getAsset_status());
+
 
 
         holder.customer.setText(assetModel.getCustomer_name());

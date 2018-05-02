@@ -244,6 +244,8 @@ public class InstallationStepFour extends Fragment implements BlockingStep, Imag
             GLConstants.assetModel.setAsset_code(edtScan.getText().toString());
             GLConstants.assetModel.setAsset_image(path);
             GLConstants.assetModel.setAsset_status(getRadioChecked(rgAssetStatus));
+            GLConstants.assetModel.setAsset_status_id(String.valueOf(getAssetStatus(rgAssetStatus)));
+
 
 
         }
@@ -461,6 +463,14 @@ public class InstallationStepFour extends Fragment implements BlockingStep, Imag
             return "Okay";
         } else {
             return "Faulty";
+        }
+    }
+
+    private int getAssetStatus(RadioGroup r) {
+        if (r.getCheckedRadioButtonId() == R.id.rbtn_okay) {
+            return GLConstants.WORKING;
+        } else {
+            return GLConstants.FAULTY;
         }
     }
 

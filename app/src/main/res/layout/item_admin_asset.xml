@@ -15,17 +15,19 @@
             android:layout_height="wrap_content"
             android:padding="12dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/asset_image"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_margin="2dp"
+                app:civ_border_width="2dp"
                 android:padding="4dp"
                 android:src="@drawable/fixed_asset" />
 
             <com.haozhang.lib.SlantedTextView
                 android:id="@+id/slanted_txt"
 
+                android:visibility="gone"
                 android:layout_width="55dp"
 
                 android:layout_height="55dp"
@@ -37,7 +39,7 @@
                 app:slantedBackgroundColor="@color/transparent"
                 app:slantedLength="20dp"
                 app:slantedMode="left"
-                app:slantedText="fkkkk"
+                app:slantedText=""
                 app:slantedTextColor="@color/black"
                 app:slantedTextSize="16sp" />
 
@@ -84,7 +86,6 @@
                     android:layout_height="wrap_content"
 
                     android:layout_below="@+id/aset"
-                    android:layout_marginTop="15dp"
                     android:orientation="horizontal">
 
                     <TextView

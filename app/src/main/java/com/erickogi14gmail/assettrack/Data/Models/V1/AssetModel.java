@@ -19,6 +19,8 @@ public class AssetModel implements Parcelable, Serializable {
 
     private String contract;
     private String asset_status;
+
+
     private String asset_status_id;
 
     private String manufacturer;

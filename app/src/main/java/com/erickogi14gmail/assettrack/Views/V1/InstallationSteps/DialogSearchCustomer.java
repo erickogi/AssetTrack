@@ -20,7 +20,7 @@ import com.erickogi14gmail.assettrack.Data.Models.V1.CustomerModel;
 import com.erickogi14gmail.assettrack.R;
 import com.erickogi14gmail.assettrack.Utills.RecyclerTouchListener;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  * Created by Eric on 11/30/2017.
@@ -34,8 +34,8 @@ public class DialogSearchCustomer extends android.support.v4.app.DialogFragment 
     private CustomerSearchAdapter customerSearchAdapter;
     private int type = 1;
 
-    private LinkedList<CustomerModel> customerModelsFilterd;
-    private LinkedList<CustomerModel> customerModelsFull;
+    private ArrayList<CustomerModel> customerModelsFilterd;
+    private ArrayList<CustomerModel> customerModelsFull;
 
     public DialogSearchCustomer() {
         // Empty constructor is required for DialogFragment
@@ -43,7 +43,7 @@ public class DialogSearchCustomer extends android.support.v4.app.DialogFragment 
         // Use `newInstance` instead as shown below
     }
 
-    public static DialogSearchCustomer newInstance(String title, int type, LinkedList<CustomerModel> customerModels) {
+    public static DialogSearchCustomer newInstance(String title, int type, ArrayList<CustomerModel> customerModels) {
         DialogSearchCustomer frag = new DialogSearchCustomer();
         Bundle args = new Bundle();
         // args.putSerializable("data", customerModels);
@@ -81,7 +81,7 @@ public class DialogSearchCustomer extends android.support.v4.app.DialogFragment 
 
         // Get field from view
         recyclerView = view.findViewById(R.id.recycler_view);
-        customerModelsFull = (LinkedList<CustomerModel>) getArguments().getSerializable("data");
+        customerModelsFull = (ArrayList<CustomerModel>) getArguments().getSerializable("data");
         for (CustomerModel customerModel : customerModelsFull) {
             Log.d("dla", "" + customerModel.getName());
         }
@@ -144,7 +144,7 @@ public class DialogSearchCustomer extends android.support.v4.app.DialogFragment 
                     customerModelsFilterd.clear();
                     //  Log.d("TRW",customerModelsFull.get(0).getName());
 
-                    for (CustomerModel customerModel : (LinkedList<CustomerModel>) getArguments().getParcelable("data")) {
+                    for (CustomerModel customerModel : (ArrayList<CustomerModel>) getArguments().getParcelable("data")) {
                         Log.d("hersdata", customerModel.getName());
                         if (customerModel.getName().toLowerCase().contains(newText.toLowerCase()) || customerModel.getPhysical_address().toLowerCase().contains(newText.toLowerCase())) {
                             customerModelsFilterd.add(customerModel);

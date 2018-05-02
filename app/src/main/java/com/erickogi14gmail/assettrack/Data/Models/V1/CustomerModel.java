@@ -13,6 +13,23 @@ public class CustomerModel implements Parcelable,Serializable {
     private String address;
     private String telephone;
     private String physical_address;
+    private boolean isChecked;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public int getKEYID() {
         return KEYID;

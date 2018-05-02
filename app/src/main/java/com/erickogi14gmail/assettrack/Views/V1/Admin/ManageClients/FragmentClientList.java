@@ -1,9 +1,10 @@
-package com.erickogi14gmail.assettrack.Views.V1.Admin.ManageAssets;
+package com.erickogi14gmail.assettrack.Views.V1.Admin.ManageClients;
 
+import android.app.Dialog;
 import android.app.SearchManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,29 +26,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.erickogi14gmail.assettrack.Adapter.AdminAssetListAdapter;
-import com.erickogi14gmail.assettrack.Data.Models.V1.AssetModel;
+import com.erickogi14gmail.assettrack.Adapter.CustomerListAdapter;
+import com.erickogi14gmail.assettrack.Data.Models.V1.CustomerModel;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbConstants;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbContentValues;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbOperations;
-import com.erickogi14gmail.assettrack.GLConstants;
 import com.erickogi14gmail.assettrack.R;
-import com.erickogi14gmail.assettrack.Utills.Constants;
 import com.erickogi14gmail.assettrack.Utills.UtilListeners.OnclickRecyclerListener;
-import com.erickogi14gmail.assettrack.Views.AssetActivity;
-import com.erickogi14gmail.assettrack.Views.V1.Installation;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class FragmentAll extends Fragment {
-    AdminAssetListAdapter listAdapter;
-    private View view;
+public class FragmentClientList extends Fragment {
+
+    CustomerListAdapter listAdapter;
     String searchtext = "";
+    private View view;
     private EditText edtSearch;
     private LinearLayout linearLayoutEmpty;
     private SearchView search;
@@ -115,11 +114,8 @@ public class FragmentAll extends Fragment {
 
         search = view.findViewById(R.id.search_bar);
         edtSearch = view.findViewById(R.id.edt_search);
-        int STATUS_ID = GLConstants.WORKING;
-        if (getArguments() != null) {
-            STATUS_ID = getArguments().getInt("STATUS_ID");
-        }
-        initUI(STATUS_ID);
+
+        initUI();
         initSearchView();
 
 
@@ -210,27 +206,22 @@ public class FragmentAll extends Fragment {
         }
     }
 
-    private void initUI(int status) {
+    private void initUI() {
 
 
         recyclerView = view.findViewById(R.id.recyclerView);
         Cursor cursor = null;
-        if (status == 0) {
-            cursor = new DbOperations(getContext()).select(DbConstants.TABLE_ITEMS_V1);
-        } else {
-            cursor = new DbOperations(getContext()).select(DbConstants.TABLE_ITEMS_V1, DbConstants.ASSET_STATUS_ID, status);
+        cursor = new DbOperations(getContext()).select(DbConstants.TABLE_CLIENT);
 
-        }
         if (cursor != null) {
-            ArrayList<AssetModel> assetModels = new DbContentValues().getAssetsv1
-                    (cursor);
-            if (assetModels != null && assetModels.size() > 0) {
+            ArrayList<CustomerModel> customerModels = new DbContentValues().getClients(cursor);
+            if (customerModels != null && customerModels.size() > 0) {
                 mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(mStaggeredLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-                listAdapter = new AdminAssetListAdapter(getContext(), assetModels, 1, new OnclickRecyclerListener() {
+                listAdapter = new CustomerListAdapter(getContext(), customerModels, new OnclickRecyclerListener() {
                     @Override
                     public void onClickListener(int position) {
 
@@ -244,22 +235,22 @@ public class FragmentAll extends Fragment {
                     @Override
                     public void onCheckedClickListener(int position) {
                         int count = 0;
-                        if (assetModels.get(position).isChecked()) {
-                            assetModels.get(position).setChecked(false);
+                        if (customerModels.get(position).isChecked()) {
+                            customerModels.get(position).setChecked(false);
 
                             // count--;
 
                         } else {
-                            assetModels.get(position).setChecked(true);
+                            customerModels.get(position).setChecked(true);
 
                         }
 
 
-                        listAdapter.notifyItemChanged(position, assetModels.get(position));
+                        listAdapter.notifyItemChanged(position, customerModels.get(position));
 
 
-                        for (AssetModel assetModel : assetModels) {
-                            if (assetModel.isChecked()) {
+                        for (CustomerModel customerModel : customerModels) {
+                            if (customerModel.isChecked()) {
                                 count++;
 
                             }
@@ -284,7 +275,7 @@ public class FragmentAll extends Fragment {
                     @Override
                     public void onClickListener(int adapterPosition, View view) {
 
-                        popupMenu(adapterPosition, assetModels.get(adapterPosition), view);
+                        popupMenu(adapterPosition, view, customerModels.get(adapterPosition));
                     }
                 });
                 // listAdapter.notifyDataSetChanged();
@@ -304,43 +295,27 @@ public class FragmentAll extends Fragment {
         }
     }
 
-    private void popupMenu(int pos, AssetModel assetModel, View view) {
+    private void popupMenu(int pos, View view, CustomerModel customerModel) {
         PopupMenu popupMenu = new PopupMenu(Objects.requireNonNull(getContext()), view);
         popupMenu.inflate(R.menu.menu_asset_options);
-        if (STATUS_ID == GLConstants.WORKING) {
-            popupMenu.getMenu().getItem(3).setVisible(false);
-        }
-        if (STATUS_ID == GLConstants.FAULTY) {
-            // popupMenu.getMenu().getItem(3).setVisible(false);
-        }
-        if (STATUS_ID == GLConstants.WRITTEN_OFF) {
-            popupMenu.getMenu().getItem(1).setVisible(false);
-            popupMenu.getMenu().getItem(3).setVisible(false);
-            popupMenu.getMenu().getItem(5).setVisible(false);
-        }
+
+        popupMenu.getMenu().getItem(3).setVisible(false);
+        popupMenu.getMenu().getItem(5).setVisible(false);
+        popupMenu.getMenu().getItem(4).setVisible(false);
+
         popupMenu.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.view:
-                    Constants.id = String.valueOf(assetModel.getKEYID());
-                    Constants.assetModel = assetModel;
-                    startActivity(new Intent(getActivity(), AssetActivity.class));
 
-
+                    startViewDialog(customerModel);
                     break;
                 case R.id.edit:
-                    GLConstants.assetModel = assetModel;
 
-                    startActivity(new Intent(getActivity(), Installation.class));
-
-
-
+                    startEditDialog(customerModel);
                     break;
                 case R.id.delete:
 
-                    startDeleteDialog(assetModel);
-
-
-
+                    startDeleteDialog(customerModel);
                     break;
 
                 case R.id.assign:
@@ -359,12 +334,12 @@ public class FragmentAll extends Fragment {
         popupMenu.show();
     }
 
-    private void startDeleteDialog(AssetModel assetModel) {
+    private void startDeleteDialog(CustomerModel customerModel) {
         final DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
 
-                    new DbOperations(getContext()).delete(DbConstants.TABLE_CLIENT, DbConstants.KEY_ID, assetModel.getKEYID());
+                    new DbOperations(getContext()).delete(DbConstants.TABLE_CLIENT, DbConstants.KEY_ID, customerModel.getKEYID());
                     listAdapter.notifyDataSetChanged();
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
@@ -384,6 +359,99 @@ public class FragmentAll extends Fragment {
                     .show();
         }
 
+    }
+
+
+    private void startEditDialog(CustomerModel customerModel) {
+        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
+        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_client_details_edit, null);
+        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        alertDialogBuilderUserInput.setView(mView);
+        alertDialogBuilderUserInput.setTitle("Customer Details");
+
+        EditText name, email, phone, address, idd;
+        name = mView.findViewById(R.id.txt_customer_name);
+        email = mView.findViewById(R.id.txt_customer_email);
+        phone = mView.findViewById(R.id.txt_customer_phone_no);
+        address = mView.findViewById(R.id.txt_customer_location);
+        idd = mView.findViewById(R.id.txt_customer_id);
+        // name=mView.findViewById(R.id.txt_customer_name);
+
+
+        name.setText(customerModel.getName());
+        email.setText(customerModel.getEmail());
+        address.setText(customerModel.getPhysical_address());
+        phone.setText(customerModel.getTelephone());
+        idd.setText(customerModel.getId());
+        //name.setText(customerModel.getName());
+
+
+        alertDialogBuilderUserInput
+                .setCancelable(false)
+                .setPositiveButton("Save", (dialogBox, id) -> {
+                    // ToDo get user input here
+
+                    // dialogBox.dismiss();
+
+                })
+
+                .setNegativeButton("Dismiss",
+                        (dialogBox, id) -> dialogBox.cancel());
+
+        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+        alertDialogAndroid.show();
+
+        Button theButton = alertDialogAndroid.getButton(DialogInterface.BUTTON_POSITIVE);
+        theButton.setOnClickListener(new CustomListener(alertDialogAndroid, customerModel.getKEYID()));
+
+    }
+
+    private void startViewDialog(CustomerModel customerModel) {
+        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
+        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_client_details, null);
+        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        alertDialogBuilderUserInput.setView(mView);
+        alertDialogBuilderUserInput.setTitle("Customer Details");
+
+        TextView name, email, phone, address, idd;
+        name = mView.findViewById(R.id.txt_customer_name);
+        email = mView.findViewById(R.id.txt_customer_email);
+        phone = mView.findViewById(R.id.txt_customer_phone_no);
+        address = mView.findViewById(R.id.txt_customer_location);
+        idd = mView.findViewById(R.id.txt_customer_id);
+        // name=mView.findViewById(R.id.txt_customer_name);
+
+
+        name.setText(customerModel.getName());
+        email.setText(customerModel.getEmail());
+        address.setText(customerModel.getPhysical_address());
+        phone.setText(customerModel.getTelephone());
+        idd.setText(customerModel.getId());
+        //name.setText(customerModel.getName());
+
+
+        alertDialogBuilderUserInput
+                .setCancelable(false)
+                .setPositiveButton("Dismiss", (dialogBox, id) -> {
+                    // ToDo get user input here
+
+                    // dialogBox.dismiss();
+
+                });
+
+//                .setNegativeButton("Dismiss",
+//                        (dialogBox, id) -> dialogBox.cancel());
+
+        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+        alertDialogAndroid.show();
+
+
+    }
+
+    public void refresh() {
+        if (listAdapter != null) {
+            listAdapter.notifyDataSetChanged();
+        }
     }
 
     private void setEmptyState(Boolean b) {
@@ -410,5 +478,83 @@ public class FragmentAll extends Fragment {
 
             Log.d("revisi", "recyclervisible");
         }
+    }
+
+    class CustomListener implements View.OnClickListener {
+        private final Dialog dialog;
+        private final int keyid;
+
+
+        public CustomListener(Dialog dialog, int keyid) {
+            this.dialog = dialog;
+            this.keyid = keyid;
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            EditText name, email, phone, address, idd;
+            name = dialog.findViewById(R.id.txt_customer_name);
+            email = dialog.findViewById(R.id.txt_customer_email);
+            phone = dialog.findViewById(R.id.txt_customer_phone_no);
+            address = dialog.findViewById(R.id.txt_customer_location);
+            idd = dialog.findViewById(R.id.txt_customer_id);
+            // name=mView.findViewById(R.id.txt_customer_name);
+
+
+            if (name.getText().toString().isEmpty()) {
+                name.setError("Required");
+                name.requestFocus();
+                return;
+            }
+
+            if (email.getText().toString().isEmpty()) {
+                email.setError("Required");
+                email.requestFocus();
+                return;
+            }
+
+            if (phone.getText().toString().isEmpty()) {
+                phone.setError("Required");
+                phone.requestFocus();
+                return;
+            }
+
+            if (address.getText().toString().isEmpty()) {
+                address.setError("Required");
+                address.requestFocus();
+                return;
+            }
+            if (idd.getText().toString().isEmpty()) {
+                idd.setError("Required");
+                idd.requestFocus();
+                return;
+            }
+
+
+            CustomerModel customerModel = new CustomerModel();
+            customerModel.setName(name.getText().toString());
+            customerModel.setId(idd.getText().toString());
+            customerModel.setPhysical_address(address.getText().toString());
+            customerModel.setEmail(email.getText().toString());
+            customerModel.setAddress(email.getText().toString());
+            customerModel.setTelephone(phone.getText().toString());
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DbConstants.cust_name, customerModel.getName());
+            contentValues.put(DbConstants.cust_id, customerModel.getName());
+            contentValues.put(DbConstants.cust_email, customerModel.getEmail());
+            contentValues.put(DbConstants.cust_address, customerModel.getEmail());
+            contentValues.put(DbConstants.cust_physical_address, customerModel.getPhysical_address());
+            contentValues.put(DbConstants.cust_telephone, customerModel.getTelephone());
+
+
+            if (new DbOperations(getActivity()).update(DbConstants.TABLE_CLIENT, DbConstants.KEY_ID, keyid, contentValues)) {
+                dialog.dismiss();
+            }
+
+        }
+
+
     }
 }

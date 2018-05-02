@@ -10,14 +10,14 @@ import android.widget.TextView;
 import com.erickogi14gmail.assettrack.Data.Models.V1.CustomerModel;
 import com.erickogi14gmail.assettrack.R;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class CustomerSearchAdapter extends RecyclerView.Adapter<CustomerSearchAdapter.MyViewHolder> {
 
     private Context context;
-    private LinkedList<CustomerModel> modelList;
+    private ArrayList<CustomerModel> modelList;
 
-    public CustomerSearchAdapter(Context context, LinkedList<CustomerModel> modelList) {
+    public CustomerSearchAdapter(Context context, ArrayList<CustomerModel> modelList) {
         this.context = context;
         this.modelList = modelList;
     }
@@ -45,7 +45,7 @@ public class CustomerSearchAdapter extends RecyclerView.Adapter<CustomerSearchAd
         return (null != modelList ? modelList.size() : 0);
     }
 
-    public void updateList(LinkedList<CustomerModel> newList) {
+    public void updateList(ArrayList<CustomerModel> newList) {
         modelList = newList;
         notifyDataSetChanged();
     }

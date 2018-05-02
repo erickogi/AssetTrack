@@ -13,6 +13,8 @@
     <!--<color name="colorAccent">#424B90 </color>-->
     <!--<color name="colorA">#65D7A0</color>-->
     <!--<color name="colorB">#C6DCF7 </color>-->
+    <color name="line">#b7b4b4</color>
+
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

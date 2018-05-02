@@ -1,6 +1,7 @@
 package com.erickogi14gmail.assettrack.Views.V1.InstallationSteps;
 
 import android.app.Dialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,14 +21,17 @@ import android.widget.RadioGroup;
 
 import com.erickogi14gmail.assettrack.Data.Models.V1.AssetModel;
 import com.erickogi14gmail.assettrack.Data.Models.V1.CustomerModel;
+import com.erickogi14gmail.assettrack.Data.Sqlite.DbConstants;
+import com.erickogi14gmail.assettrack.Data.Sqlite.DbContentValues;
+import com.erickogi14gmail.assettrack.Data.Sqlite.DbOperations;
 import com.erickogi14gmail.assettrack.GLConstants;
 import com.erickogi14gmail.assettrack.R;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class InstallationStepOne extends Fragment implements BlockingStep,DialogSearchCustomer.DialogSearchListener  {
@@ -124,18 +128,14 @@ public class InstallationStepOne extends Fragment implements BlockingStep,Dialog
         }
     }
 
-    LinkedList<CustomerModel> getCustomers(){
-        LinkedList<CustomerModel> customerModels=new LinkedList<>();
+    ArrayList<CustomerModel> getCustomers() {
+        ArrayList<CustomerModel> customerModels = new ArrayList<>();
 
-        for(int a=0;a<10;a++){
-            CustomerModel c=new CustomerModel();
-            c.setId(String.valueOf(a));
-            c.setName("Customer "+String.valueOf(a));
-            c.setPhysical_address("Address "+String.valueOf(a));
-
-            customerModels.add(c);
-
+        Cursor cursor = new DbOperations(getActivity()).select(DbConstants.TABLE_CLIENT);
+        if (cursor != null) {
+            customerModels = new DbContentValues().getClients(cursor);
         }
+
         return customerModels;
     }
 
@@ -162,7 +162,7 @@ public class InstallationStepOne extends Fragment implements BlockingStep,Dialog
         });
     }
 
-    private void dialogSelectCustomer(LinkedList<CustomerModel> customerModels) {
+    private void dialogSelectCustomer(ArrayList<CustomerModel> customerModels) {
         FragmentManager fm = getFragmentManager();
         DialogSearchCustomer dialogSearch = DialogSearchCustomer.newInstance("Clients", 1, customerModels);
         // dialogSearch.show(fm,"dialog");

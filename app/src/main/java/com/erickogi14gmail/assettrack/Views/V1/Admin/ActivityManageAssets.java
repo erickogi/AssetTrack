@@ -8,15 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
+import com.erickogi14gmail.assettrack.GLConstants;
 import com.erickogi14gmail.assettrack.Kogi.BottomNav.AHBottomNavigation;
 import com.erickogi14gmail.assettrack.Kogi.BottomNav.AHBottomNavigationItem;
 import com.erickogi14gmail.assettrack.R;
 import com.erickogi14gmail.assettrack.Views.V1.Admin.ManageAssets.FragmentAll;
-import com.erickogi14gmail.assettrack.Views.V1.Admin.ManageAssets.FragmentDecomissioned;
-import com.erickogi14gmail.assettrack.Views.V1.Admin.ManageAssets.FragmentFailed;
-import com.erickogi14gmail.assettrack.Views.V1.Admin.ManageAssets.FragmentWorking;
 
 public class ActivityManageAssets extends AppCompatActivity {
 
@@ -31,14 +28,13 @@ public class ActivityManageAssets extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
         fragment = new FragmentAll();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", 0);
+        bundle.putInt("STATUS_ID", 0);
+        fragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.frame_layout, fragment, "fragmentMain").commit();
 
@@ -55,7 +51,7 @@ public class ActivityManageAssets extends AppCompatActivity {
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("Working",//null
                 R.drawable.ic_verified_user_black_24dp, R.color.white
         );
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Failed",//null
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Faulty",//null
                 R.drawable.ic_error_outline_black_24dp, R.color.white
         );
         AHBottomNavigationItem item4 = new AHBottomNavigationItem("Written Off",//null
@@ -133,44 +129,43 @@ public class ActivityManageAssets extends AppCompatActivity {
         bottomNavigation.setOnTabSelectedListener((position, wasSelected) -> {
             // Do something cool here...
             Bundle bundle = new Bundle();
+            fragment = new FragmentAll();
             switch (position) {
                 case 0:
-                    fragment = new FragmentAll();
+
                     popOutFragments();
                     bundle.putInt("type", 0);
+                    bundle.putInt("STATUS_ID", 0);
                     fragment.setArguments(bundle);
                     setFragment();
                     break;
                 case 1:
                     popOutFragments();
-                    fragment = new FragmentWorking();
                     bundle.putInt("type", 1);
+                    bundle.putInt("STATUS_ID", GLConstants.WORKING);
                     fragment.setArguments(bundle);
                     setFragment();
                     break;
                 case 2:
-                    fragment = new FragmentFailed();
                     popOutFragments();
                     bundle.putInt("type", 2);
+                    bundle.putInt("STATUS_ID", GLConstants.FAULTY);
                     fragment.setArguments(bundle);
                     setFragment();
                     break;
 
                 case 3:
-                    fragment = new FragmentDecomissioned();
                     popOutFragments();
                     bundle.putInt("type", 3);
+                    bundle.putInt("STATUS_ID", GLConstants.WRITTEN_OFF);
                     fragment.setArguments(bundle);
                     setFragment();
                     break;
             }
             return true;
         });
-        bottomNavigation.setOnNavigationPositionListener(new AHBottomNavigation.OnNavigationPositionListener() {
-            @Override
-            public void onPositionChange(int y) {
-                // Manage the new y position
-            }
+        bottomNavigation.setOnNavigationPositionListener(y -> {
+            // Manage the new y position
         });
 
         try {

@@ -52,12 +52,12 @@ public class DrawerClass {
 
 
         PrimaryDrawerItem home = new PrimaryDrawerItem().withIdentifier(1)
-                .withName("Home").withTextColorRes(R.color.drawertext)
+                .withName("Manage Assets").withTextColorRes(R.color.drawertext)
                 .withIcon(R.drawable.ic_home_black_24dp);
 
 
         PrimaryDrawerItem account = new PrimaryDrawerItem().withIdentifier(2)
-                .withName("My Profile").withTextColorRes(R.color.drawertext).withIcon(R.drawable.ic_account_circle_black_24dp);
+                .withName("Manage Clients").withTextColorRes(R.color.drawertext).withIcon(R.drawable.ic_account_circle_black_24dp);
         PrimaryDrawerItem messages = new PrimaryDrawerItem().withIdentifier(3)
                 .withName("Messages").withTextColorRes(R.color.drawertext)//.withIcon(R.drawable.common_google_signin_btn_icon_dark_normal)
                 ;

@@ -1,4 +1,4 @@
-package com.erickogi14gmail.assettrack.Views.V1.Admin.ManageEngineers;
+package com.erickogi14gmail.assettrack.Views.V1.Admin.ManageIssues;
 
 import android.app.Dialog;
 import android.app.SearchManager;
@@ -42,7 +42,7 @@ import com.erickogi14gmail.assettrack.Utills.UtilListeners.OnclickRecyclerListen
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class FragmentEngineerList extends Fragment {
+public class FragmentIssueList extends Fragment {
     ListAdapter listAdapter;
     String searchtext = "";
     private View view;

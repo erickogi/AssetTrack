@@ -51,7 +51,7 @@ public class AdminAssetListAdapter extends RecyclerView.Adapter<AdminAssetListAd
     public void onBindViewHolder(@NonNull AdminAssetListAdapter.MyViewHolder holder, int position) {
         // dbOperations = new DbOperations(context);
         AssetModel assetModel = assetModels.get(position);
-        holder.mName.setText(assetModel.getAsset_name());
+        holder.mName.setText("Asset ".concat(assetModel.getAsset_name()));
 
 
         if (status == 0) {
@@ -69,8 +69,7 @@ public class AdminAssetListAdapter extends RecyclerView.Adapter<AdminAssetListAd
         }
 
 
-
-        holder.customer.setText(assetModel.getCustomer_name());
+        holder.customer.setText("Customer  ".concat(assetModel.getCustomer_name()));
 
         if (assetModel.getAsset_image().equals("R")) {
             Glide.with(context).load(R.drawable.dvf).into(holder.imageView);

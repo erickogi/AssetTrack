@@ -31,7 +31,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.erickogi14gmail.assettrack.Adapter.CustomerListAdapter;
+import com.erickogi14gmail.assettrack.Adapter.ListAdapter;
 import com.erickogi14gmail.assettrack.Data.Models.V1.CustomerModel;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbConstants;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbContentValues;
@@ -44,7 +44,7 @@ import java.util.Objects;
 
 public class FragmentClientList extends Fragment {
 
-    CustomerListAdapter listAdapter;
+    ListAdapter listAdapter;
     String searchtext = "";
     private View view;
     private EditText edtSearch;
@@ -221,7 +221,7 @@ public class FragmentClientList extends Fragment {
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-                listAdapter = new CustomerListAdapter(getContext(), customerModels, new OnclickRecyclerListener() {
+                listAdapter = new ListAdapter(getContext(), customerModels, new OnclickRecyclerListener() {
                     @Override
                     public void onClickListener(int position) {
 

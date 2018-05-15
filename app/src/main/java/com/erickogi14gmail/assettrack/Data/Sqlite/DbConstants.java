@@ -89,9 +89,30 @@ public class DbConstants {
     public static final ArrayList<AccessoriesModel> accessoriesModels = null;
 
 
-
+    //    private int KEYID;
+//    public static final String issuse_asset_id;
+//    private String asset_code;
+//    private String asset_name;
+//
+//    private String date;
+//    private String nextduedervice;
+//    private String travel_hours;
+//    private String labour_hours;
+//    private String failure_desc;
+//    private String failure_soln;
+//    private String parts;
+//    private String issue_status;
+//    private String safety;
+//    private String engineer_comment;
+//    private String engineer_id;
+//    private String customer_comment;
+//    private String customer_id;
+//    private String customer_name;
+//    private String work_ticket;
+//    private int status;
     //Issue
     public static final  String ASSET_ID="asset_id";
+    // public static final  String ASSET_CODE="asset_id";
     public static final  String DATE="date";
     public static final  String NEXTDUEDERVICE="nextduedervice";
     public static final  String TRAVEL_HOURS="travel_hours";
@@ -107,6 +128,27 @@ public class DbConstants {
     public static final String WORK_TICKET = "work_ticket";
 
 
+    public static final String issuse_asset_id = "assetid";
+    public static final String issuse_asset_code = "assetcode";
+    public static final String issuse_asset_name = "assetname";
+
+    public static final String issuse_date = "issuedate";
+    public static final String issuse_nextduedervice = "nextdue";
+    public static final String issuse_travel_hours = "travelhours";
+    public static final String issuse_labour_hours = "labourhours";
+    public static final String issuse_failure_desc = "failuredesc";
+    public static final String issuse_failure_soln = "failuresoln";
+    public static final String issuse_parts = "issueparts";
+    public static final String issuse_issue_status = "issuestatus";
+    public static final String issuse_safety = "safeter";
+    public static final String issuse_engineer_comment = "engineercomment";
+    public static final String issuse_engineer_id = "engid";
+    public static final String issuse_engineer_name = "engname";
+    public static final String issuse_customer_comment = "custcomment";
+    public static final String issuse_customer_id = "custid";
+    public static final String issuse_customer_name = "customername";
+    public static final String issuse_work_ticket = "workticket";
+    public static final String issue_status = "isstatus";
     //ENGINEER
     public static final String id = "eng_id";
     public static final String TABLE_ENG_V1 = "table_eng_v1";

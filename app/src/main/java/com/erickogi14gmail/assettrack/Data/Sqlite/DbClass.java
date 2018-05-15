@@ -142,6 +142,39 @@ public class DbClass extends SQLiteOpenHelper {
         return fieldsName;
     }
 
+    private HashMap<String, String> creatIssueV1() {
+        HashMap<String, String> fieldsName = new HashMap<>();
+
+        fieldsName.put(DbConstants.KEY_ID, "INTEGER PRIMARY KEY  AUTOINCREMENT");
+        fieldsName.put(DbConstants.issue_status, "varchar ");
+        fieldsName.put(DbConstants.issuse_asset_id, "varchar ");
+        fieldsName.put(DbConstants.issuse_asset_code, "varchar ");
+        fieldsName.put(DbConstants.issuse_asset_name, "varchar ");
+        fieldsName.put(DbConstants.issuse_customer_comment, "varchar ");
+        fieldsName.put(DbConstants.issuse_customer_id, "varchar ");
+        fieldsName.put(DbConstants.issuse_customer_name, "varchar ");
+
+        fieldsName.put(DbConstants.issuse_date, "varchar ");
+        fieldsName.put(DbConstants.issuse_engineer_comment, "varchar ");
+
+
+        fieldsName.put(DbConstants.issuse_engineer_id, "varchar ");
+
+
+        fieldsName.put(DbConstants.issuse_work_ticket, "varchar ");
+        fieldsName.put(DbConstants.issuse_travel_hours, "varchar ");
+        fieldsName.put(DbConstants.issuse_labour_hours, "varchar ");
+        fieldsName.put(DbConstants.issuse_parts, "varchar ");
+        fieldsName.put(DbConstants.issuse_failure_soln, "varchar ");
+        fieldsName.put(DbConstants.issuse_failure_desc, "varchar ");
+        fieldsName.put(DbConstants.issuse_engineer_name, "varchar ");
+        fieldsName.put(DbConstants.issuse_nextduedervice, "varchar ");
+        fieldsName.put(DbConstants.issuse_issue_status, "varchar ");
+        fieldsName.put(DbConstants.issuse_safety, "varchar ");
+
+
+        return fieldsName;
+    }
     private HashMap<String, String> creatEngineer() {
         HashMap<String, String> fieldsName = new HashMap<>();
 
@@ -211,6 +244,7 @@ public class DbClass extends SQLiteOpenHelper {
         db.execSQL(createTable(DbConstants.TABLE_ENG_V1, creatEngineer()));
         db.execSQL(createTable(DbConstants.TABLE_CLIENT, creatClient()));
         db.execSQL(createTable(DbConstants.TABLE_STATUS, creatStatus()));
+        //   db.execSQL(createTable(DbConstants.TAB, creatStatus()));
 
 
 

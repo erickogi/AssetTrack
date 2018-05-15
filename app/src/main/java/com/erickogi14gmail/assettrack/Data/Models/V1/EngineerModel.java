@@ -20,6 +20,17 @@ public class EngineerModel implements Serializable {
     private String current_issue;
     private String current_location;
 
+    private boolean isChecked;
+
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
     public int getKEYID() {
         return KEYID;
     }

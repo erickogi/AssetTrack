@@ -9,6 +9,7 @@ public class IssueModel implements Parcelable {
     private int KEYID;
     private String asset_id;
     private String asset_code;
+    private String asset_name;
 
     private String date;
     private String nextduedervice;
@@ -21,9 +22,12 @@ public class IssueModel implements Parcelable {
     private String safety;
     private String engineer_comment;
     private String engineer_id;
+    private String engineer_name;
     private String customer_comment;
     private String customer_id;
+    private String customer_name;
     private String work_ticket;
+    private int status;
 
     private ArrayList<PartsModel> partsModels;
 
@@ -46,6 +50,38 @@ public class IssueModel implements Parcelable {
         this.work_ticket = in.readString();
         this.partsModels = new ArrayList<PartsModel>();
         in.readList(this.partsModels, PartsModel.class.getClassLoader());
+    }
+
+    public String getEngineer_name() {
+        return engineer_name;
+    }
+
+    public void setEngineer_name(String engineer_name) {
+        this.engineer_name = engineer_name;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getCustomer_name() {
+        return customer_name;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
+    }
+
+    public String getAsset_name() {
+        return asset_name;
+    }
+
+    public void setAsset_name(String asset_name) {
+        this.asset_name = asset_name;
     }
 
     public int getKEYID() {

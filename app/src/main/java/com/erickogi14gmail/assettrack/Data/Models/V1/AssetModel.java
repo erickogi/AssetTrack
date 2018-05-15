@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class AssetModel implements Parcelable, Serializable {
     private int KEYID;
     private String asset_code;
+    private String asset_id;
     private String asset_image;
     private String asset_name;
 
@@ -63,6 +64,14 @@ public class AssetModel implements Parcelable, Serializable {
     private ArrayList<AccessoriesModel> accessoriesModels;
     // private ArrayList<Tt>
 
+
+    public String getAsset_id() {
+        return asset_id;
+    }
+
+    public void setAsset_id(String asset_id) {
+        this.asset_id = asset_id;
+    }
 
     public boolean isChecked() {
         return isChecked;

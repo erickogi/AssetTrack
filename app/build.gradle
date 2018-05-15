@@ -50,7 +50,7 @@ dependencies {
     compile('com.wdullaer:materialdatetimepicker:3.3.0') {
         exclude group: 'com.android.support'
     }
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.android.support:cardview-v7:26.1.0'
     compile 'com.muddzdev:styleabletoast:1.0.7'
     //compile 'q.rorbin:badgeview:1.1.2'
@@ -80,7 +80,7 @@ dependencies {
     //  implementation 'com.eightbitlab:blurview:1.4.0'
     implementation 'com.github.searchy2:CustomAlertViewDialogue:2.3'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-
+    compile 'com.pusher:pusher-java-client:1.5.0'
 //    compile 'com.github.Mariovc:ImagePicker:1.2.2'
 
 

@@ -90,7 +90,8 @@ public class AdminMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setResideMenu();
+        // setResideMenu();
+        setDrawerMenu();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +104,12 @@ public class AdminMainActivity extends AppCompatActivity {
         fab.hide();
     }
 
+    private void setDrawerMenu() {
+        // DrawerClass drawerClass
+    }
+
     public void manageStatus(View view) {
-        startActivity(new Intent(this, ActivityManageStatus.class));
+        startActivity(new Intent(this, ActivityManageIssues.class));
 
     }
 

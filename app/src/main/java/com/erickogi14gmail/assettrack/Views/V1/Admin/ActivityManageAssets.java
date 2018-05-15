@@ -1,5 +1,6 @@
 package com.erickogi14gmail.assettrack.Views.V1.Admin;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,10 +10,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.erickogi14gmail.assettrack.Data.PrefManager;
 import com.erickogi14gmail.assettrack.GLConstants;
 import com.erickogi14gmail.assettrack.Kogi.BottomNav.AHBottomNavigation;
 import com.erickogi14gmail.assettrack.Kogi.BottomNav.AHBottomNavigationItem;
 import com.erickogi14gmail.assettrack.R;
+import com.erickogi14gmail.assettrack.Utills.DrawerClass;
+import com.erickogi14gmail.assettrack.Utills.UtilListeners.DrawerItemListener;
+import com.erickogi14gmail.assettrack.Views.Login.Login;
 import com.erickogi14gmail.assettrack.Views.V1.Admin.ManageAssets.FragmentAll;
 
 public class ActivityManageAssets extends AppCompatActivity {
@@ -20,12 +25,80 @@ public class ActivityManageAssets extends AppCompatActivity {
     AHBottomNavigation bottomNavigation;
     Fragment fragment = null;
 
+    private void setDrawerMenu(Toolbar toolbar) {
+        DrawerClass.getDrawer(ActivityManageAssets.this, toolbar, new DrawerItemListener() {
+            @Override
+            public void logOutClicked() {
+                PrefManager prefManager = new PrefManager(ActivityManageAssets.this);
+                prefManager.setIsLoggedIn(false, 1);
+                startActivity(new Intent(ActivityManageAssets.this, Login.class));
+                finish();
+            }
+
+            @Override
+            public void helpClicked() {
+
+            }
+
+            @Override
+            public void settingsClicked() {
+
+            }
+
+            @Override
+            public void assetClicked() {
+
+            }
+
+            @Override
+            public void clientsClicked() {
+
+                manageClients();
+            }
+
+            @Override
+            public void engineersClicked() {
+
+                manageEngineers();
+            }
+
+            @Override
+            public void issuesClicked() {
+
+                manageStatus();
+            }
+
+            @Override
+            public void accountClicked() {
+
+            }
+        });
+    }
+
+    public void manageStatus() {
+        startActivity(new Intent(this, ActivityManageIssues.class));
+
+    }
+
+    public void manageEngineers() {
+        startActivity(new Intent(this, ActivityManageEngineers.class));
+    }
+
+    public void manageClients() {
+        startActivity(new Intent(this, ActivityManageClients.class));
+    }
+
+    public void manageAssets() {
+        startActivity(new Intent(this, ActivityManageAssets.class));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_assets);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setDrawerMenu(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -49,15 +122,19 @@ public class ActivityManageAssets extends AppCompatActivity {
                 , R.drawable.ic_clear_all_black_24dp, R.color.white
         );
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("Working",//null
-                R.drawable.ic_verified_user_black_24dp, R.color.white
+                R.drawable.ic_verified_user_black_24dp, R.color.green
         );
         AHBottomNavigationItem item3 = new AHBottomNavigationItem("Faulty",//null
-                R.drawable.ic_error_outline_black_24dp, R.color.white
+                R.drawable.ic_error_outline_black_24dp, R.color.red
         );
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem("Written Off",//null
-                R.drawable.ic_phonelink_off_black_24dp, R.color.white
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("Service",//null
+                R.drawable.ic_phonelink_off_black_24dp, R.color.orange_color_picker
         );
 
+        item1.setColor(getResources().getColor(R.color.colorPrimary));
+        item2.setColor(getResources().getColor(R.color.green_color_picker));
+        item3.setColor(getResources().getColor(R.color.red));
+        item4.setColor(getResources().getColor(R.color.orange_color_picker));
 
 // Add items
         bottomNavigation.addItem(item1);
@@ -65,8 +142,13 @@ public class ActivityManageAssets extends AppCompatActivity {
         bottomNavigation.addItem(item3);
         bottomNavigation.addItem(item4);
 
+        bottomNavigation.setColored(true);
+        bottomNavigation.setSoundEffectsEnabled(true);
+
+
+
 // Set background color
-        bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#795548"));
+        //  bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#795548"));
 
 // Disable the translation inside the CoordinatorLayout
         bottomNavigation.setBehaviorTranslationEnabled(true);
@@ -75,12 +157,12 @@ public class ActivityManageAssets extends AppCompatActivity {
         //bottomNavigation.manageFloatingActionButtonBehavior(floatingActionButton);
 
 // Change colors
-        bottomNavigation.setAccentColor(Color.parseColor("#FFFFFF"));
-        bottomNavigation.setInactiveColor(Color.parseColor("#65D7A0"));
+        // bottomNavigation.setAccentColor(Color.parseColor("#FFFFFF"));
+        // bottomNavigation.setInactiveColor(Color.parseColor("#65D7A0"));
         // bottomNavigation.setAct(Color.parseColor("#65D7A0"));
 
 // Force to tint the drawable (useful for font with icon for example)
-        bottomNavigation.setForceTint(true);
+        // bottomNavigation.setForceTint(true);
 
 // Display color under navigation bar (API 21+)
 // Don't forget these lines in your style-v21
@@ -174,7 +256,13 @@ public class ActivityManageAssets extends AppCompatActivity {
             nm.printStackTrace();
         }
 
+        setCount(2, 0);
+        setCount(6, 1);
+        setCount(1, 2);
+        setCount(6, 3);
+
     }
+
 
     public void setCount(int count, int pos) {
         try {

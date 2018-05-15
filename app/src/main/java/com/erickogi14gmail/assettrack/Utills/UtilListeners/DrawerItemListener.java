@@ -11,14 +11,18 @@ public interface DrawerItemListener {
 
 
 
-    void homeClicked();
+
 
     void settingsClicked();
 
 
-    void profileClicked();
+    void assetClicked();
 
-    void storiesClicked();
+    void clientsClicked();
 
-    void shareClicked();
+    void engineersClicked();
+
+    void issuesClicked();
+
+    void accountClicked();
 }

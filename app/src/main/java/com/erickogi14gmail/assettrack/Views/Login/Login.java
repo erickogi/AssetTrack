@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.erickogi14gmail.assettrack.Data.PrefManager;
 import com.erickogi14gmail.assettrack.R;
 import com.erickogi14gmail.assettrack.Views.MainActivity;
-import com.erickogi14gmail.assettrack.Views.V1.Admin.AdminMainActivity;
+import com.erickogi14gmail.assettrack.Views.V1.Admin.ActivityManageAssets;
 
 public class Login extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public class Login extends AppCompatActivity {
          prefManager=new PrefManager(Login.this);
         if(prefManager.isLoggedIn()){
             if (prefManager.getUserType() == 1) {
-                startActivity(new Intent(Login.this, AdminMainActivity.class));
+                startActivity(new Intent(Login.this, ActivityManageAssets.class));
                 finish();
             } else if (prefManager.getUserType() == 2) {
                 startActivity(new Intent(Login.this, MainActivity.class));
@@ -50,7 +50,7 @@ public class Login extends AppCompatActivity {
 
         if (edtID.getText().toString().toLowerCase().equals("admin") && edtPassword.getText().toString().equals("zalego")) {
             prefManager.setIsLoggedIn(true, 1);
-            startActivity(new Intent(Login.this, AdminMainActivity.class));
+            startActivity(new Intent(Login.this, ActivityManageAssets.class));
             finish();
         }
         if (edtID.getText().toString().toLowerCase().equals("engineer") && edtPassword.getText().toString().equals("zalego")) {

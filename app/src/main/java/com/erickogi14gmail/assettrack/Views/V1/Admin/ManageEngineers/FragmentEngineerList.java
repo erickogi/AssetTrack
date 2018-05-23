@@ -455,6 +455,7 @@ public class FragmentEngineerList extends Fragment {
     public void refresh() {
         if (listAdapter != null) {
             listAdapter.notifyDataSetChanged();
+            initUI();
         }
     }
 

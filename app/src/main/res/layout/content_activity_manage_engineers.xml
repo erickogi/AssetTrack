@@ -8,4 +8,13 @@
     tools:context=".Views.V1.Admin.ActivityManageEngineers"
     tools:showIn="@layout/activity_manage_engineers">
 
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+
+
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp">
+
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

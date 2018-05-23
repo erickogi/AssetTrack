@@ -15,7 +15,7 @@ import java.util.Set;
  */
 
 public class DbClass extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "assetTrack.db";
 
 
@@ -244,6 +244,7 @@ public class DbClass extends SQLiteOpenHelper {
         db.execSQL(createTable(DbConstants.TABLE_ENG_V1, creatEngineer()));
         db.execSQL(createTable(DbConstants.TABLE_CLIENT, creatClient()));
         db.execSQL(createTable(DbConstants.TABLE_STATUS, creatStatus()));
+        db.execSQL(createTable(DbConstants.TABLE_ISSUE_V1, creatIssueV1()));
         //   db.execSQL(createTable(DbConstants.TAB, creatStatus()));
 
 
@@ -260,6 +261,7 @@ public class DbClass extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DbConstants.TABLE_ENG_V1);
         db.execSQL("DROP TABLE IF EXISTS " + DbConstants.TABLE_CLIENT);
         db.execSQL("DROP TABLE IF EXISTS " + DbConstants.TABLE_STATUS);
+        db.execSQL("DROP TABLE IF EXISTS " + DbConstants.TABLE_ISSUE_V1);
 
 
 

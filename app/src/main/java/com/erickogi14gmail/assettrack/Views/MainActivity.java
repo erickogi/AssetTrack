@@ -2,7 +2,6 @@ package com.erickogi14gmail.assettrack.Views;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,9 +27,6 @@ import android.widget.Toast;
 
 import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScanner;
 import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScannerBuilder;
-import com.erickogi14gmail.assettrack.Adapter.TimeLine.OrderStatus;
-import com.erickogi14gmail.assettrack.Adapter.TimeLine.TimeLineModel;
-import com.erickogi14gmail.assettrack.Data.Models.Assets;
 import com.erickogi14gmail.assettrack.Data.Models.V1.AssetModel;
 import com.erickogi14gmail.assettrack.Data.PrefManager;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbConstants;
@@ -53,8 +49,6 @@ import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -298,35 +292,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startDialog();
     }
 
-    private boolean enterTestData() {
-        Assets assets=new Assets();
-        assets.setType("Medical Equipment Name");
-        assets.setImage("R");
-        assets.setTag("4353254623");
-        assets.setSite("Aga-Khan Nairobi Hospital");
-        assets.setSerial("4432d2442d");
-        assets.setLast_maintenance_by("Eric Kogi Kimani");
-        assets.setLast_maintenance("2011-10-5");
-        assets.setDate("2011-10-5");
-        assets.setCondition("In Perfect Location");
-        assets.setModel("X3R4CR4");
-        assets.setInstalledby("Eric Kogi Kimani");
-        assets.setContract("Yes ");
-
-        ContentValues contentValues=new ContentValues();
-        contentValues.put(DbConstants.type,assets.getType());
-        contentValues.put(DbConstants.tag,assets.getTag());
-        contentValues.put(DbConstants.image,assets.getImage());
-        contentValues.put(DbConstants.site,assets.getSite());
-        contentValues.put(DbConstants.serial,assets.getSerial());
-        contentValues.put(DbConstants.last_maintenance_by,assets.getLast_maintenance_by());
-        contentValues.put(DbConstants.last_maintenance,assets.getLast_maintenance());
-        contentValues.put(DbConstants.condition,assets.getCondition());
-        //contentValues.put(DbConstants.per);
-
-        return dbOperations.insert(DbConstants.TABLE_ITEMS, contentValues);
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -433,96 +398,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ScrollView scrollView = findViewById(R.id.scroll);
         Snackbar.make(scrollView, msg, Snackbar.LENGTH_SHORT)
                 .setAction("Action", null).show();
-    }
-    private List<TimeLineModel> getTimeline(){
-        List<TimeLineModel> timeLineModels=new LinkedList<>();
-        TimeLineModel t=new TimeLineModel();
-        t.setDate("2011-02-12");
-        t.semMessage("System installation");
-        t.setStatus(OrderStatus.COMPLETED);
-        t.setIssue(" None ");
-        t.setFix(" None");
-        t.setComment("System Installed Successfully");
-        t.setPerson(" Eric Kogi (0012)");
-        t.setStatus(OrderStatus.COMPLETED);
-
-
-        TimeLineModel t1=new TimeLineModel();
-        t1.setDate("2011-06-12");
-        t1.semMessage("Routine System Maintenance");
-        t1.setStatus(OrderStatus.COMPLETED);
-        t1.setIssue(" None ");
-        t1.setFix(" None");
-        t1.setComment("System was in good condition");
-        t1.setPerson(" Eric Kogi (0012)");
-
-        TimeLineModel t2=new TimeLineModel();
-        t2.setDate("2011-08-10");
-        t2.semMessage("System Servicing");
-        t2.setStatus(OrderStatus.COMPLETED);
-        t2.setIssue(" None ");
-        t2.setFix(" None");
-        t2.setComment("System Was in Good condition");
-        t2.setPerson(" Eric Kogi (0012)");
-
-        TimeLineModel t3=new TimeLineModel();
-        t3.setDate("2012-11-10");
-        t3.semMessage("Fix on board Computer");
-        t3.setStatus(OrderStatus.COMPLETED);
-        t3.setIssue(" On Board Computer was over heating ");
-        t3.setFix(" Replaced the heat sink");
-        t3.setComment("System Now in good condition");
-        t3.setPerson(" Eric Kogi (0012)");
-
-        TimeLineModel t4=new TimeLineModel();
-        t4.setDate("2012-09-08");
-        t4.semMessage("Routing Maintenance");
-        t4.setStatus(OrderStatus.COMPLETED);
-        t4.setIssue(" None ");
-        t4.setFix(" None");
-        t4.setComment("System Was in good condition");
-        t4.setPerson(" Eric Kogi (0012)");
-
-        TimeLineModel t5=new TimeLineModel();
-        t5.setDate("2013-07-05");
-        t5.semMessage("System Servicing");
-        t5.setStatus(OrderStatus.COMPLETED);
-        t5.setIssue(" None ");
-        t5.setFix(" None");
-        t5.setComment("System Was in Good condition");
-        t5.setPerson(" Eric Kogi (0012)");
-
-        TimeLineModel t6=new TimeLineModel();
-        t6.setDate("2014-02-03");
-        t6.semMessage("Boot loader replacement");
-        t6.setStatus(OrderStatus.COMPLETED);
-        t6.setIssue(" The bootloader system had reached its service limit ");
-        t6.setFix(" I replaced the bootloader ( ID 334R434) ");
-        t6.setComment("System now  in Good condition");
-        t6.setPerson(" Eric Kogi (0012)");
-
-        TimeLineModel t7=new TimeLineModel();
-        t7.setDate("2015-02-12");
-        t7.semMessage("System Servicing");
-        t7.setStatus(OrderStatus.COMPLETED);
-        t7.setIssue(" None ");
-        t7.setFix(" None");
-        t7.setComment("System Was in Good condition");
-        t7.setPerson(" Eric Kogi (0012)");
-
-        timeLineModels.add(t7);
-        timeLineModels.add(t6);
-        timeLineModels.add(t5);
-        timeLineModels.add(t4);
-        timeLineModels.add(t3);
-        timeLineModels.add(t2);
-        timeLineModels.add(t1);
-        timeLineModels.add(t);
-
-
-
-
-        return timeLineModels;
     }
 
 

@@ -157,6 +157,7 @@ public class ActivityManageEngineers extends AppCompatActivity {
             engineerModel.setEmail(email.getText().toString());
             engineerModel.setLast_name(sname.getText().toString());
             engineerModel.setPhone(phone.getText().toString());
+            engineerModel.setFirst_name(name.getText().toString());
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(DbConstants.name, engineerModel.getFirst_name() + " " + engineerModel.getLast_name());

@@ -9,6 +9,7 @@ import com.erickogi14gmail.assettrack.Data.Models.Issues;
 import com.erickogi14gmail.assettrack.Data.Models.V1.AssetModel;
 import com.erickogi14gmail.assettrack.Data.Models.V1.CustomerModel;
 import com.erickogi14gmail.assettrack.Data.Models.V1.EngineerModel;
+import com.erickogi14gmail.assettrack.Data.Models.V1.IssueModel;
 import com.erickogi14gmail.assettrack.Data.Models.V1.StatusModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -88,6 +89,52 @@ public class DbContentValues {
             return null;
         }
         return assets;
+    }
+
+    public ArrayList<IssueModel> getIssuesV1(Cursor cursor) {
+        ArrayList<IssueModel> issuess = new ArrayList<>();
+        if (!cursor.isLast()) {
+
+            while (cursor.moveToNext()) {
+
+                IssueModel issues = new IssueModel();
+                issues.setKEYID(cursor.getInt(cursor.getColumnIndex(DbConstants.KEY_ID)));
+                issues.setAsset_id(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_asset_id)));
+
+                issues.setAsset_code(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_asset_code)));
+                issues.setAsset_name(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_asset_name)));
+                issues.setDate(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_date)));
+                issues.setNextduedervice(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_nextduedervice)));
+                issues.setTravel_hours(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_travel_hours)));
+
+
+                issues.setLabour_hours(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_labour_hours)));
+                issues.setFailure_desc(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_failure_desc)));
+                issues.setFailure_soln(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_failure_soln)));
+                issues.setParts(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_parts)));
+                issues.setIssue_status(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_issue_status)));
+                issues.setSafety(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_safety)));
+                issues.setEngineer_comment(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_engineer_comment)));
+                issues.setEngineer_id(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_engineer_id)));
+                issues.setEngineer_name(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_engineer_name)));
+                issues.setCustomer_comment(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_customer_comment)));
+                issues.setCustomer_id(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_customer_id)));
+                issues.setCustomer_name(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_customer_name)));
+                issues.setWork_ticket(cursor.getString(cursor.getColumnIndex(DbConstants.issuse_work_ticket)));
+                issues.setStatus(cursor.getInt(cursor.getColumnIndex(DbConstants.issue_status)));
+
+                issuess.add(issues);
+
+            }
+        }
+
+        if (cursor == null) {
+            return null;
+        } else if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+        return issuess;
     }
 
     public interface MyInterfaceTitles {

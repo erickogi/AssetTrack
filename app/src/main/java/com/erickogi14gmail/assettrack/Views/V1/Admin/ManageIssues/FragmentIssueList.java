@@ -32,11 +32,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.erickogi14gmail.assettrack.Adapter.ListAdapter;
-import com.erickogi14gmail.assettrack.Data.Models.V1.EngineerModel;
+import com.erickogi14gmail.assettrack.Data.Models.V1.IssueModel;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbConstants;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbContentValues;
 import com.erickogi14gmail.assettrack.Data.Sqlite.DbOperations;
 import com.erickogi14gmail.assettrack.R;
+import com.erickogi14gmail.assettrack.Utills.Constants;
+import com.erickogi14gmail.assettrack.Utills.DateTimeUtils;
+import com.erickogi14gmail.assettrack.Utills.MyToast;
 import com.erickogi14gmail.assettrack.Utills.UtilListeners.OnclickRecyclerListener;
 
 import java.util.ArrayList;
@@ -210,17 +213,17 @@ public class FragmentIssueList extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         Cursor cursor = null;
-        cursor = new DbOperations(getContext()).select(DbConstants.TABLE_ENG_V1);
+        cursor = new DbOperations(getContext()).select(DbConstants.TABLE_ISSUE_V1);
 
         if (cursor != null) {
-            ArrayList<EngineerModel> engineerModel = new DbContentValues().getEngineer(cursor);
-            if (engineerModel != null && engineerModel.size() > 0) {
+            ArrayList<IssueModel> issueModels = new DbContentValues().getIssuesV1(cursor);
+            if (issueModels != null && issueModels.size() > 0) {
                 mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(mStaggeredLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 // ArrayList<EngineerModel> engineerModels, int status, Context context, OnclickRecyclerListener onclickRecyclerListener
 
-                listAdapter = new ListAdapter(engineerModel, 1, getActivity(), new OnclickRecyclerListener() {
+                listAdapter = new ListAdapter(issueModels, 2, new OnclickRecyclerListener() {
                     @Override
                     public void onClickListener(int position) {
 
@@ -234,22 +237,22 @@ public class FragmentIssueList extends Fragment {
                     @Override
                     public void onCheckedClickListener(int position) {
                         int count = 0;
-                        if (engineerModel.get(position).isChecked()) {
-                            engineerModel.get(position).setChecked(false);
+                        if (issueModels.get(position).isChecked()) {
+                            issueModels.get(position).setChecked(false);
 
                             // count--;
 
                         } else {
-                            engineerModel.get(position).setChecked(true);
+                            issueModels.get(position).setChecked(true);
 
                         }
 
 
-                        listAdapter.notifyItemChanged(position, engineerModel.get(position));
+                        listAdapter.notifyItemChanged(position, issueModels.get(position));
 
 
-                        for (EngineerModel engineerModel : engineerModel) {
-                            if (engineerModel.isChecked()) {
+                        for (IssueModel issueModel : issueModels) {
+                            if (issueModel.isChecked()) {
                                 count++;
 
                             }
@@ -274,9 +277,9 @@ public class FragmentIssueList extends Fragment {
                     @Override
                     public void onClickListener(int adapterPosition, View view) {
 
-                        popupMenu(adapterPosition, view, engineerModel.get(adapterPosition));
+                        //popupMenu(adapterPosition, view, issueModels.get(adapterPosition));
                     }
-                });
+                }, getActivity());
                 // listAdapter.notifyDataSetChanged();
 
                 recyclerView.setAdapter(listAdapter);
@@ -294,7 +297,7 @@ public class FragmentIssueList extends Fragment {
         }
     }
 
-    private void popupMenu(int pos, View view, EngineerModel engineerModel) {
+    private void popupMenu(int pos, View view, IssueModel issueModel) {
         PopupMenu popupMenu = new PopupMenu(Objects.requireNonNull(getContext()), view);
         popupMenu.inflate(R.menu.menu_asset_options);
 
@@ -306,15 +309,15 @@ public class FragmentIssueList extends Fragment {
             switch (item.getItemId()) {
                 case R.id.view:
 
-                    startViewDialog(engineerModel);
+                    startViewDialog(issueModel);
                     break;
                 case R.id.edit:
 
-                    startEditDialog(engineerModel);
+                    startEditDialog(issueModel);
                     break;
                 case R.id.delete:
 
-                    startDeleteDialog(engineerModel);
+                    startDeleteDialog(issueModel);
                     break;
 
                 case R.id.assign:
@@ -333,12 +336,12 @@ public class FragmentIssueList extends Fragment {
         popupMenu.show();
     }
 
-    private void startDeleteDialog(EngineerModel engineerModel) {
+    private void startDeleteDialog(IssueModel issueModel) {
         final DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
 
-                    new DbOperations(getContext()).delete(DbConstants.TABLE_ENG_V1, DbConstants.KEY_ID, engineerModel.getKEYID());
+                    new DbOperations(getContext()).delete(DbConstants.TABLE_ISSUE_V1, DbConstants.KEY_ID, issueModel.getKEYID());
                     listAdapter.notifyDataSetChanged();
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
@@ -361,100 +364,202 @@ public class FragmentIssueList extends Fragment {
     }
 
 
-    private void startEditDialog(EngineerModel engineerModel) {
+    private void startEditDialog(IssueModel issueModel) {
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
-        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_engineer_details_edit, null);
-        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_new_issue, null);
+        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getContext());
         alertDialogBuilderUserInput.setView(mView);
-        alertDialogBuilderUserInput.setTitle("Engineer's Details");
+        alertDialogBuilderUserInput.setTitle("New  Issue");
+        alertDialogBuilderUserInput.setIcon(R.drawable.ic_add_black_24dp);
+        TextView txtDate, txtBy;
+        txtBy = mView.findViewById(R.id.txt_by);
+        txtDate = mView.findViewById(R.id.txt_date);
+
+        EditText edtIssue, edtIssueDesc, edtFix, edtComment, edtTravel, edtLabour, edtEngRemarks, edtCustomerRemarks;
+        //TextView txtDate,txtBy;
 
 
-        EditText name, sname, email, phone, speciality, idd;
-        name = mView.findViewById(R.id.txt_eng_first_name);
-        sname = mView.findViewById(R.id.txt_eng_last_name);
-        email = mView.findViewById(R.id.txt_eng_email);
-        phone = mView.findViewById(R.id.txt_eng_phone_no);
-        speciality = mView.findViewById(R.id.txt_eng_speciality);
-        idd = mView.findViewById(R.id.txt_eng_id);
-        // name=mView.findViewById(R.id.txt_customer_name);
+        edtIssue = mView.findViewById(R.id.edt_issue_title);
+        edtIssueDesc = mView.findViewById(R.id.edt_issue_desc);
+        edtFix = mView.findViewById(R.id.edt_fix);
+        edtComment = mView.findViewById(R.id.edt_comment);
+
+        edtEngRemarks = mView.findViewById(R.id.edt_engineer_remarks);
+        edtCustomerRemarks = mView.findViewById(R.id.edt_customer_remarks);
+
+        edtLabour = mView.findViewById(R.id.edt_labours_hours);
+        edtTravel = mView.findViewById(R.id.edt_travel_hours);
+
+        txtBy = mView.findViewById(R.id.txt_by);
+        txtDate = mView.findViewById(R.id.txt_date);
+
+        txtDate.setText(issueModel.getDate());
+        txtBy.setText(issueModel.getEngineer_name());
+        edtComment.setText(issueModel.getEngineer_comment());
+        edtFix.setText(issueModel.getFailure_soln());
+        edtIssue.setText(issueModel.getFailure_desc());
+        edtIssueDesc.setText(issueModel.getFailure_desc());
 
 
-        name.setText(engineerModel.getFirst_name());
-        email.setText(engineerModel.getEmail());
-        sname.setText(engineerModel.getLast_name());
-        phone.setText(engineerModel.getPhone());
-        idd.setText(engineerModel.getId());
-        speciality.setText(engineerModel.getSpeciality());
-        //name.setText(engineerModel.getName());
+        try {
+            edtLabour.setText(issueModel.getLabour_hours());
+            edtTravel.setText(issueModel.getTravel_hours());
+            edtCustomerRemarks.setText(issueModel.getCustomer_comment());
+            edtEngRemarks.setText(issueModel.getEngineer_comment());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
+        try {
+            //edtLabour.setText(timeLineModel.getLabour_hours());
+            edtTravel.setText(issueModel.getTravel_hours());
+            edtCustomerRemarks.setText(issueModel.getCustomer_comment());
+            edtEngRemarks.setText(issueModel.getEngineer_comment());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
+        try {
+            // edtLabour.setText(timeLineModel.getLabour_hours());
+            // edtTravel.setText(timeLineModel.getTravel_hours());
+            edtCustomerRemarks.setText(issueModel.getCustomer_comment());
+            edtEngRemarks.setText(issueModel.getEngineer_comment());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
+        try {
+            //edtLabour.setText(timeLineModel.getLabour_hours());
+            ///edtTravel.setText(timeLineModel.getTravel_hours());
+            // edtCustomerRemarks.setText(timeLineModel.getCustcomments());
+            edtEngRemarks.setText(issueModel.getEngineer_comment());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
 
 
+        // final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
         alertDialogBuilderUserInput
                 .setCancelable(false)
-                .setPositiveButton("Save", (dialogBox, id) -> {
-                    // ToDo get user input here
+//                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogBox, int id) {
+//                        // ToDo get user input here
+//
+//                        dialogBox.dismiss();
+//
+//                    }
+//                })
 
-                    // dialogBox.dismiss();
-
-                })
-
-                .setNegativeButton("Dismiss",
-                        (dialogBox, id) -> dialogBox.cancel());
+                .setNegativeButton("Okay",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                dialogBox.cancel();
+                            }
+                        });
 
         AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
         alertDialogAndroid.show();
 
         Button theButton = alertDialogAndroid.getButton(DialogInterface.BUTTON_POSITIVE);
-        theButton.setOnClickListener(new CustomListener(alertDialogAndroid, engineerModel.getKEYID()));
+        theButton.setOnClickListener(new CustomListener(alertDialogAndroid, issueModel.getKEYID(), issueModel));
 
     }
 
-    private void startViewDialog(EngineerModel engineerModel) {
+    private void startViewDialog(IssueModel issueModel) {
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
-        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_engineer_details, null);
-        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_new_issue_report, null);
+        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getContext());
         alertDialogBuilderUserInput.setView(mView);
-        alertDialogBuilderUserInput.setTitle("Customer Details");
+        alertDialogBuilderUserInput.setTitle("Issue Details");
+        //alertDialogBuilderUserInput.setIcon(R.drawable.ic_add_black_24dp);
 
-        TextView name, sname, email, phone, speciality, idd;
-        name = mView.findViewById(R.id.txt_eng_first_name);
-        sname = mView.findViewById(R.id.txt_eng_last_name);
-        email = mView.findViewById(R.id.txt_eng_email);
-        phone = mView.findViewById(R.id.txt_eng_phone_no);
-        speciality = mView.findViewById(R.id.txt_eng_speciality);
-        idd = mView.findViewById(R.id.txt_eng_id);
-        // name=mView.findViewById(R.id.txt_customer_name);
+        TextView edtIssue, edtIssueDesc, edtFix, edtComment, edtTravel, edtLabour, edtEngRemarks, edtCustomerRemarks;
+        TextView txtDate, txtBy;
+
+        edtIssue = mView.findViewById(R.id.edt_issue_title);
+        edtIssueDesc = mView.findViewById(R.id.edt_issue_desc);
+        edtFix = mView.findViewById(R.id.edt_fix);
+        edtComment = mView.findViewById(R.id.edt_comment);
+
+        edtEngRemarks = mView.findViewById(R.id.edt_engineer_remarks);
+        edtCustomerRemarks = mView.findViewById(R.id.edt_customer_remarks);
+
+        edtLabour = mView.findViewById(R.id.edt_labours_hours);
+        edtTravel = mView.findViewById(R.id.edt_travel_hours);
+
+        txtBy = mView.findViewById(R.id.txt_by);
+        txtDate = mView.findViewById(R.id.txt_date);
+
+        txtDate.setText(issueModel.getDate());
+        txtBy.setText(issueModel.getEngineer_name());
+        edtComment.setText(issueModel.getEngineer_comment());
+        edtFix.setText(issueModel.getFailure_soln());
+        edtIssue.setText(issueModel.getFailure_desc());
+        edtIssueDesc.setText(issueModel.getFailure_desc());
 
 
-        name.setText(engineerModel.getFirst_name());
-        email.setText(engineerModel.getEmail());
-        sname.setText(engineerModel.getLast_name());
-        phone.setText(engineerModel.getPhone());
-        idd.setText(engineerModel.getId());
-        speciality.setText(engineerModel.getSpeciality());
-        //name.setText(engineerModel.getName());
+        try {
+            edtLabour.setText(issueModel.getLabour_hours());
+            edtTravel.setText(issueModel.getTravel_hours());
+            edtCustomerRemarks.setText(issueModel.getCustomer_comment());
+            edtEngRemarks.setText(issueModel.getEngineer_comment());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
+        try {
+            //edtLabour.setText(timeLineModel.getLabour_hours());
+            edtTravel.setText(issueModel.getTravel_hours());
+            edtCustomerRemarks.setText(issueModel.getCustomer_comment());
+            edtEngRemarks.setText(issueModel.getEngineer_comment());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
+        try {
+            // edtLabour.setText(timeLineModel.getLabour_hours());
+            // edtTravel.setText(timeLineModel.getTravel_hours());
+            edtCustomerRemarks.setText(issueModel.getCustomer_comment());
+            edtEngRemarks.setText(issueModel.getEngineer_comment());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
+        try {
+            //edtLabour.setText(timeLineModel.getLabour_hours());
+            ///edtTravel.setText(timeLineModel.getTravel_hours());
+            // edtCustomerRemarks.setText(timeLineModel.getCustcomments());
+            edtEngRemarks.setText(issueModel.getEngineer_comment());
+        } catch (Exception nm) {
+            nm.printStackTrace();
+        }
 
 
+        // final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
         alertDialogBuilderUserInput
                 .setCancelable(false)
-                .setPositiveButton("Dismiss", (dialogBox, id) -> {
-                    // ToDo get user input here
+//                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogBox, int id) {
+//                        // ToDo get user input here
+//
+//                        dialogBox.dismiss();
+//
+//                    }
+//                })
 
-                    // dialogBox.dismiss();
-
-                });
-
-//                .setNegativeButton("Dismiss",
-//                        (dialogBox, id) -> dialogBox.cancel());
+                .setNegativeButton("Okay",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                dialogBox.cancel();
+                            }
+                        });
 
         AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
         alertDialogAndroid.show();
-
-
     }
 
     public void refresh() {
         if (listAdapter != null) {
             listAdapter.notifyDataSetChanged();
+            initUI();
         }
     }
 
@@ -487,85 +592,163 @@ public class FragmentIssueList extends Fragment {
     class CustomListener implements View.OnClickListener {
         private final Dialog dialog;
         private final int keyid;
+        private final IssueModel issueModel;
 
 
-        public CustomListener(Dialog dialog, int keyid) {
+        public CustomListener(Dialog dialog, int keyid, IssueModel issueModel) {
             this.dialog = dialog;
             this.keyid = keyid;
+            this.issueModel = issueModel;
 
         }
 
         @Override
         public void onClick(View v) {
-            EditText name, sname, email, phone, speciality, idd;
-            name = dialog.findViewById(R.id.txt_eng_first_name);
-            sname = dialog.findViewById(R.id.txt_eng_last_name);
-            email = dialog.findViewById(R.id.txt_eng_email);
-            phone = dialog.findViewById(R.id.txt_eng_phone_no);
-            speciality = dialog.findViewById(R.id.txt_eng_speciality);
-            idd = dialog.findViewById(R.id.txt_eng_id);
-            // name=mView.findViewById(R.id.txt_customer_name);
+            EditText edtIssue, edtIssueDesc, edtFix, edtComment, edtSpareUsed, edtSpareNeeded, edtTravelHours, edtLabourHours, edtCustomerComents, edtEngineersComents;
+
+            TextView txtDate, txtBy;
+
+            edtLabourHours = dialog.findViewById(R.id.edt_labour_hours);
+            edtTravelHours = dialog.findViewById(R.id.edt_travel_hours);
+
+            edtIssue = dialog.findViewById(R.id.edt_issue_title);
+            edtIssueDesc = dialog.findViewById(R.id.edt_issue_desc);
+            edtFix = dialog.findViewById(R.id.edt_fix);
+            edtComment = dialog.findViewById(R.id.edt_comment);
+            edtSpareNeeded = dialog.findViewById(R.id.edt_spare_need);
+            edtSpareUsed = dialog.findViewById(R.id.edt_spare_used);
+
+            edtCustomerComents = dialog.findViewById(R.id.edt_customer_remarks);
+            edtEngineersComents = dialog.findViewById(R.id.edt_engineer_remarks);
 
 
-            if (name.getText().toString().isEmpty()) {
-                name.setError("Required");
-                name.requestFocus();
+            txtBy = dialog.findViewById(R.id.txt_by);
+            txtDate = dialog.findViewById(R.id.txt_date);
+
+            if (edtIssue.getText().toString().isEmpty()) {
+                edtIssue.setError("Required");
+                edtTravelHours.requestFocus();
+                return;
+            }
+//            if(edtComment.getText().toString().isEmpty()){
+//                edtComment.setError("Required");
+//                return;
+//            }
+            if (edtFix.getText().toString().isEmpty()) {
+                edtTravelHours.requestFocus();
+                edtFix.setError("Required");
                 return;
             }
 
-            if (email.getText().toString().isEmpty()) {
-                email.setError("Required");
-                email.requestFocus();
+            if (edtIssueDesc.getText().toString().isEmpty()) {
+                edtTravelHours.requestFocus();
+                edtIssue.setError("Required");
                 return;
             }
 
-            if (phone.getText().toString().isEmpty()) {
-                phone.setError("Required");
-                phone.requestFocus();
+            if (edtSpareNeeded.getText().toString().isEmpty()) {
+                edtSpareNeeded.setError("Required");
+                edtTravelHours.requestFocus();
+                return;
+            }
+            if (edtSpareUsed.getText().toString().isEmpty()) {
+                edtSpareUsed.setError("Required");
+                edtTravelHours.requestFocus();
+                return;
+            }
+            if (edtCustomerComents.getText().toString().isEmpty()) {
+                edtCustomerComents.setError("Required");
+                edtTravelHours.requestFocus();
+                return;
+            }
+            if (edtEngineersComents.getText().toString().isEmpty()) {
+                edtEngineersComents.setError("Required");
+                edtTravelHours.requestFocus();
+                return;
+            }
+            if (edtLabourHours.getText().toString().isEmpty()) {
+                edtLabourHours.setError("Required");
+                edtTravelHours.requestFocus();
                 return;
             }
 
-            if (sname.getText().toString().isEmpty()) {
-                sname.setError("Required");
-                sname.requestFocus();
-                return;
-            }
-            if (speciality.getText().toString().isEmpty()) {
-                speciality.setError("Required");
-                speciality.requestFocus();
-                return;
-            }
-            if (idd.getText().toString().isEmpty()) {
-                idd.setError("Required");
-                idd.requestFocus();
+            if (edtTravelHours.getText().toString().isEmpty()) {
+                edtTravelHours.setError("Required");
+                edtTravelHours.requestFocus();
                 return;
             }
 
 
-            EngineerModel engineerModel = new EngineerModel();
+            IssueModel issueModel = new IssueModel();
+            issueModel.setAsset_id(String.valueOf(issueModel.getKEYID()));
+            issueModel.setAsset_code(issueModel.getAsset_code());
+            issueModel.setAsset_name(issueModel.getAsset_name());
+            issueModel.setCustomer_name(issueModel.getCustomer_name());
+            issueModel.setDate(DateTimeUtils.getToday());
+            issueModel.setEngineer_id(issueModel.getEngineer_id());
+            issueModel.setEngineer_name(issueModel.getEngineer_name());
+            issueModel.setIssue_status("0");
+            issueModel.setWork_ticket(issueModel.getWork_ticket());
+            issueModel.setNextduedervice(issueModel.getNextduedervice());
+            issueModel.setLabour_hours(edtLabourHours.getText().toString());
+            issueModel.setTravel_hours(edtTravelHours.getText().toString());
+            issueModel.setFailure_soln(edtFix.getText().toString());
+            issueModel.setFailure_desc(edtIssueDesc.getText().toString());
+            issueModel.setParts(edtSpareNeeded.getText().toString());
+            issueModel.setCustomer_comment(edtCustomerComents.getText().toString());
+            issueModel.setEngineer_comment(edtEngineersComents.getText().toString());
+            //issueModel.setTravel_hours(edtTravelHours.getText().toString());
 
-            engineerModel.setName(name.getText().toString());
-            engineerModel.setId(idd.getText().toString());
-            engineerModel.setSpeciality(speciality.getText().toString());
-            engineerModel.setEmail(email.getText().toString());
-            engineerModel.setLast_name(sname.getText().toString());
-            engineerModel.setPhone(phone.getText().toString());
+
+//            fieldsName.put(DbConstants.KEY_ID, "INTEGER PRIMARY KEY  AUTOINCREMENT");
+//            fieldsName.put(DbConstants.asset_id, "varchar ");
+//            fieldsName.put(DbConstants.message, "varchar ");
+//            fieldsName.put(DbConstants.date, "varchar ");
+//            fieldsName.put(DbConstants.issue, "varchar ");
+//            fieldsName.put(DbConstants.fix, "varchar ");
+//            fieldsName.put(DbConstants.comment, "varchar ");
+//            fieldsName.put(DbConstants.person, "varchar ");
+//
+//            fieldsName.put(DbConstants.parts_needed, "varchar ");
+//            fieldsName.put(DbConstants.parts_used, "varchar ");
+//
+//
+//            fieldsName.put(DbConstants.next_service, "varchar ");
+//
+//
+//            fieldsName.put(DbConstants.cusomerremarks, "varchar ");
+//            fieldsName.put(DbConstants.engineersremarks, "varchar ");
+//            fieldsName.put(DbConstants.labourhours, "varchar ");
+//            fieldsName.put(DbConstants.travelhours, "varchar ");
+//
+
 
             ContentValues contentValues = new ContentValues();
-            contentValues.put(DbConstants.name, engineerModel.getFirst_name() + " " + engineerModel.getLast_name());
+            contentValues.put(DbConstants.issuse_asset_id, issueModel.getAsset_id());
+            contentValues.put(DbConstants.issuse_asset_code, issueModel.getAsset_code());
+            contentValues.put(DbConstants.issuse_asset_name, issueModel.getAsset_name());
+            contentValues.put(DbConstants.issuse_customer_name, issueModel.getCustomer_name());
+            contentValues.put(DbConstants.issuse_customer_id, issueModel.getCustomer_id());
+            contentValues.put(DbConstants.issuse_engineer_id, issueModel.getEngineer_id());
+            contentValues.put(DbConstants.issuse_engineer_name, issueModel.getEngineer_name());
+            contentValues.put(DbConstants.issuse_date, issueModel.getDate());
+            contentValues.put(DbConstants.issuse_issue_status, issueModel.getIssue_status());
+            contentValues.put(DbConstants.issuse_failure_desc, issueModel.getFailure_desc());
+            contentValues.put(DbConstants.issuse_failure_soln, issueModel.getFailure_soln());
+            contentValues.put(DbConstants.issuse_labour_hours, issueModel.getLabour_hours());
+            contentValues.put(DbConstants.travelhours, issueModel.getTravel_hours());
+            contentValues.put(DbConstants.issuse_engineer_comment, issueModel.getEngineer_comment());
+            contentValues.put(DbConstants.issuse_customer_comment, issueModel.getCustomer_comment());
 
-            contentValues.put(DbConstants.id, engineerModel.getId());
-            contentValues.put(DbConstants.first_name, engineerModel.getFirst_name());
-            contentValues.put(DbConstants.last_name, engineerModel.getLast_name());
-            contentValues.put(DbConstants.email, engineerModel.getEmail());
-            contentValues.put(DbConstants.speciality, engineerModel.getSpeciality());
+            DbOperations dbOperations = new DbOperations(getContext());
 
-            contentValues.put(DbConstants.phone, engineerModel.getPhone());
+            if (dbOperations.insert(DbConstants.TABLE_ISSUE_V1, contentValues)) {
 
-            if (new DbOperations(getActivity()).update(DbConstants.TABLE_ENG_V1, DbConstants.KEY_ID, keyid, contentValues)) {
-                dialog.dismiss();
+                initUI();
+            } else {
+                MyToast.toast("Issue not updated", getContext(), R.drawable.ic_error_outline_black_24dp, Constants.TOAST_LONG);
             }
-
+            dialog.dismiss();
         }
 
 

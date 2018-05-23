@@ -261,6 +261,8 @@ public class InstallationStepFour extends Fragment implements BlockingStep, Imag
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        edtScan.setText("7678678");
+
         if (verify()) {
             return null;
         } else {
@@ -285,10 +287,11 @@ public class InstallationStepFour extends Fragment implements BlockingStep, Imag
                 .withEnableAutoFocus(true)
                 .withBleepEnabled(true)
                 .withCenterTracker()
-                .withOnly2DScanning()
+
+
                 .withBarcodeFormats(Barcode.AZTEC | Barcode.EAN_13 | Barcode.CODE_93)
                 // .withBackfacingCamera()
-                // .withText("Scanning...")
+                .withText("Scanning...")
                 .withResultListener(barcode -> {
 
                     edtScan.setText(barcode.rawValue);
@@ -433,8 +436,9 @@ public class InstallationStepFour extends Fragment implements BlockingStep, Imag
 
     private boolean verify() {
         Log.d("Next", "Verify start");
-        return isTextInputEditTextFilled(edtScan)
-                && isRadioGroupChecked(rgAssetStatus)
+        return //isTextInputEditTextFilled(edtScan)
+                // &&
+                isRadioGroupChecked(rgAssetStatus)
                 && isStringValid(path);
 
     }

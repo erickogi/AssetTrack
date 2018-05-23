@@ -17,6 +17,7 @@ public class DbConstants {
 
     public static final String TABLE_ITEMS="assets_table";
     public static String TABLE_ISSUE="issue_table";
+    public static String TABLE_ISSUE_V1 = "issue_table_vi";
 
 
     public static final String  tag="tag_c";
@@ -179,9 +180,6 @@ public class DbConstants {
     public static final String status = "status_name";
     public static final String status_id = "status_id";
     public static final String status_color = "status_color";
-
-
-
 
 
 

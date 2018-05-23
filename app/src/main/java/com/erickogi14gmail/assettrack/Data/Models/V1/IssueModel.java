@@ -28,6 +28,7 @@ public class IssueModel implements Parcelable {
     private String customer_name;
     private String work_ticket;
     private int status;
+    private boolean isChecked;
 
     private ArrayList<PartsModel> partsModels;
 
@@ -50,6 +51,14 @@ public class IssueModel implements Parcelable {
         this.work_ticket = in.readString();
         this.partsModels = new ArrayList<PartsModel>();
         in.readList(this.partsModels, PartsModel.class.getClassLoader());
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public String getEngineer_name() {

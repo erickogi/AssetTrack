@@ -71,31 +71,37 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             holder.actions.setVisibility(View.VISIBLE);
 
             CustomerModel customerModel = assetModels.get(position);
-            holder.txtCustomerName.setText(customerModel.getName());
-            holder.txtCustomerLocation.setText(customerModel.getPhysical_address());
+            holder.txtCustomerName.setText("Name : " + customerModel.getName());
+            holder.txtCustomerLocation.setText("Location : " + customerModel.getPhysical_address());
 
         } else if (status == 1) {
             holder.actions.setVisibility(View.VISIBLE);
 
             EngineerModel engineerModel = engineerModels.get(position);
-            holder.txtCustomerName.setText(engineerModel.getName());
-            holder.txtCustomerLocation.setText(engineerModel.getPhone());
+            holder.txtCustomerName.setText("Name : " + engineerModel.getName());
+            holder.txtCustomerLocation.setText("Contact : " + engineerModel.getPhone());
 
         } else if (status == 2) {
             holder.actions.setVisibility(View.VISIBLE);
             holder.txtDate.setVisibility(View.VISIBLE);
 
             IssueModel issueModel = issueModels.get(position);
-            holder.txtCustomerName.setText(issueModel.getAsset_name());
-            holder.txtDate.setText(issueModel.getDate());
-            holder.txtCustomerLocation.setText(issueModel.getCustomer_name());
+            holder.txtCustomerName.setText("Asset : " + issueModel.getAsset_name());
+            holder.txtDate.setText("Date : " + issueModel.getDate());
+            holder.txtCustomerLocation.setText("Client : " + issueModel.getCustomer_name());
 
         }
     }
 
     @Override
     public int getItemCount() {
-        return assetModels.size();
+        if (status == 0) {
+            return assetModels.size();
+        } else if (status == 1) {
+            return engineerModels.size();
+        } else if (status == 2) {
+            return issueModels.size();
+        } else return 0;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
